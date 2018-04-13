@@ -3,6 +3,29 @@ const router = express.Router();
 const Group = require('../models/group');
 const Disturbance = require('../models/disturbance');
 
+const keywords = { 
+    "man" : 1,
+    "dude" : 1,
+    "guy" : 1,
+    "guys" : 1,
+    "men" : 1,
+    "dudes" : 1,
+    "woman" : 2,
+    "lady" : 2,
+    "girl" : 2,
+    "women" : 2,
+    "girls": 2,
+    "ladies" : 2,
+    "drunk" : 3,
+    "wasted" : 3,
+    "intoxicated" : 3,
+    "fight" : 4,
+    "combat" : 4,
+    "battle" : 4 
+}
+
+
+
 
 router.get('/suggestions', function(req, res) {
     Disturbance.find({status : "ACTIVE" }).sort({timestamp: -1}).exec(function(err, disturbances) {
@@ -19,7 +42,7 @@ router.get('/suggestions', function(req, res) {
                         let el1_pos = {latitude : el1.lat, longitude : el1.lon};
                         let el2_pos = {latitude : el2.lat, longitude : el2.lon};
 
-                        if(withinRadius(el1_pos, el2_pos, 0.2) && withinTimeFrame(el1.timestamp, el2.timestamp, 1200000) ){
+                        if(withinRadius(el1_pos, el2_pos, 1) && withinTimeFrame(el1.timestamp, el2.timestamp, 1200000) && withinCorrelation(el1.notes, el2.notes, 0.4) ){
                             group_suggestion.push(el2._id);
                         }
                     }
@@ -95,11 +118,39 @@ router.delete('/:id', function(req, res) {
 });
 
 
+function withinCorrelation(notes1, notes2, correlation_limit){
+    let s1 = notes1.toLowerCase().split(" ");
+    let s2 = notes2.toLowerCase().split(" ");
+
+    let groups = [];
+    let matches = 0;
+
+
+    s1.map((word) =>{
+        if(keywords.hasOwnProperty(word)){
+            groups.push(keywords.word);
+        }
+    });
+
+    s2.map((word) =>{
+        if(keywords.hasOwnProperty(word)){
+            if(groups.indexOf(keywords.word) !== -1){
+                
+                matches++;
+            }
+        }
+    });
+
+
+    let correlation = matches/4; //Math.max(groups1.length, groups2.length, 1);
+
+    return(correlation > correlation_limit);
+}
+
 
 function withinTimeFrame(time1, time2, msec){
     let d1 = Date.parse(time1);
     let d2 = Date.parse(time2);
-
     let diff = Math.abs(d1-d2);
     return (diff <= msec);
 }
