@@ -1,12 +1,31 @@
 import React, { Component } from 'react';
+import Dialog from 'material-ui/Dialog';
+import RaisedButton from 'material-ui/RaisedButton';
+import BaseMUI from './BaseMUI';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import Divider from 'material-ui/Divider';
 
-class DisturbanceMapComponent extends Component {
+class DisturbanceMapComponent extends React.Component {
   //Show incident info
-  handleClick = () => {
-    alert(this.props.incident_name_prop)
+  constructor(props) {
+    super(props)
+
+    this.state = {
+        show_modal : false
+    }
   }
+
+  open_modal= () => {
+    this.setState({
+      show_modal: !this.state.show_modal 
+    }) 
+  }
+
+  dispatch_guard = () => {
+    alert("Guard dispatched.")
+  }
+  
     calc_color() {
-      console.log(this.props.incident_status)
       var status = this.props.incident_status;
       if (status === "active") {
         return "#f44149";
@@ -26,9 +45,47 @@ class DisturbanceMapComponent extends Component {
         color: "white"
       }
 
+      const modalStyle = {
+        width: "300px",
+        height: "500px",
+        marginLeft: "50%" 
+      }
+
+      const titleStyle = {
+        textAlign:"left" 
+      }
+
+      const actions = [
+        <div>
+            <Card>
+                <CardHeader
+                  title={this.props.incident_name}
+                  subtitle={this.props.incident_time}
+                  style={titleStyle}
+                />
+                <Divider />
+                <CardTitle style={titleStyle}title="Notes:" />
+              <CardText
+                style={titleStyle}>
+              {this.props.incident_notes}
+            </CardText>
+            </Card>
+           <RaisedButton primary={true} onClick={this.open_modal} label="Close"/> 
+           <RaisedButton secondary={true} onClick={this.dispatch_guard} label="Dispatch guard"/> 
+        </div>
+      ]
+
     return (
-        <div onClick={this.handleClick} style={divStyle}>
-          <h3>{this.props.incident_name_prop}</h3>
+        <div onClick={this.open_modal} style={divStyle}>
+          <h3>{this.props.incident_name}</h3>
+          <Dialog
+            style={modalStyle}
+            contentStyle={modalStyle}
+            title="Viewing detailed info"
+            open={this.state.show_modal}
+            actions={actions}
+          >
+          </Dialog>
         </div>
     );
   }

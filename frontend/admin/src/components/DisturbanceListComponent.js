@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
-import Grid from 'material-ui/Grid';
+import { Grid, Row, Col } from 'react-flexbox-grid';
+
+//Internal
+import DisturbanceInfoModal from './DisturbanceInfoModal';
 
 class DisturbanceListComponent extends Component {
     constructor(props) {
       super(props)
+
     }
     calc_color() {
       console.log(this.props.incident_status)
@@ -27,14 +31,8 @@ class DisturbanceListComponent extends Component {
 
     return (
           <div style={divStyle}>
-              <Grid container spacing={8}>
-                <Grid item xs={6}>
                     <h3>{this.props.incident_name}</h3>
-                </Grid>
-                <Grid item xs={3}>
                     <p>{this.props.incident_time}</p>
-                </Grid>
-            </Grid>
             <p>{this.props.incident_notes}</p>
           </div>
     );

@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 import DisturbanceMapComponent from './DisturbanceMapComponent';
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
-
 export default class MapComponent extends Component {
     constructor(props) {
       super(props)
@@ -24,8 +22,8 @@ export default class MapComponent extends Component {
     const map_incidents = incidents.map((incident) => 
       <DisturbanceMapComponent 
         key={incident._id} 
-        incident_name_prop={incident.name} 
-        incident_note_prop={incident.notes} 
+        incident_name={incident.name} 
+        incident_notes={incident.notes} 
         lat={incident.lat} 
         lng={incident.lng}
         incident_time={incident.timestamp}

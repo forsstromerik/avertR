@@ -3,23 +3,11 @@ import logo from './logo.svg';
 import './App.css';
 import AppBar from 'material-ui/AppBar';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Grid from 'material-ui/Grid';
-import createPalette from 'material-ui/styles/createPalette'
-import createMuiTheme from 'material-ui/styles/createMuiTheme'
-import {grey, amber, red} from 'material-ui/colors'
+import { Grid, Row, Col } from 'react-flexbox-grid';
 
 //Internal components
 import ListView from './components/Listview';
 import MapComponent from './components/MapComponent';
-
-const muiTheme = createMuiTheme({
-	palette: createPalette({
-		primary: grey,
-		accent: amber,
-		error: red,
-		type: 'dark'
-	})
-})
 
 class App extends Component {
     constructor(props) {
@@ -52,21 +40,21 @@ class App extends Component {
     }
   render() {
   return (
-    <MuiThemeProvider
-      theme={this.muiTheme}>
+    <MuiThemeProvider>
       <div>
-        <div style={{height: "70px", width: "100%", color: "white", 
-          fontSize: "32px", backgroundColor: "#4286f4"}}>
-          Disturbance Lister
-        </div>
-        <Grid container spacing={24}>
-          <Grid item xs={4}>
-            <ListView incident_list={this.state.incidents}/>
+        <AppBar
+          title="Disturbance Listener"
+        />
+          <Grid fluid>
+            <Row>
+            <Col xs={4}>
+                <ListView incident_list={this.state.incidents}/>
+            </Col>
+            <Col xs={8}>
+                <MapComponent incident_list={this.state.incidents}/>
+            </Col>
+            </Row>
           </Grid>
-          <Grid item xs={8}>
-            <MapComponent incident_list={this.state.incidents}/>
-          </Grid>
-        </Grid>
       </div>
     </MuiThemeProvider>
   )
