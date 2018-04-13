@@ -1,17 +1,30 @@
 import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
-import Grid from 'material-ui/Grid';
+import { Grid, Row, Col } from 'react-flexbox-grid';
+import moment from 'moment';
+
+//Internal
+import DisturbanceInfoModal from './DisturbanceInfoModal';
 
 class DisturbanceListComponent extends Component {
     constructor(props) {
       super(props)
+      this.state = {
+        time_diff : ""
+      }
     }
+      componentWillMount() {
+        var incident_time = Date.parse(this.props.incident_time);
+        var diff = moment(incident_time).fromNow();
+        this.setState({
+          time_diff : diff
+        }) 
+      }
     calc_color() {
-      console.log(this.props.incident_status)
       var status = this.props.incident_status;
-      if (status === "active") {
+      if (status === "ACTIVE") {
         return "#f44149";
-      } else if (status === "pending") {
+      } else if (status === "PENDING") {
         return "#e8f441";
       } else {
         return "#41f443"
@@ -27,14 +40,8 @@ class DisturbanceListComponent extends Component {
 
     return (
           <div style={divStyle}>
-              <Grid container spacing={8}>
-                <Grid item xs={6}>
                     <h3>{this.props.incident_name}</h3>
-                </Grid>
-                <Grid item xs={3}>
-                    <p>{this.props.incident_time}</p>
-                </Grid>
-            </Grid>
+                    <p>{this.state.time_diff}</p>
             <p>{this.props.incident_notes}</p>
           </div>
     );
