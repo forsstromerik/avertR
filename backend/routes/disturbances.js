@@ -29,7 +29,7 @@ router.post('/', function(req, res) {
 router.get('/:id', function(req, res) {
     Disturbance.findById(req.params.id, function(err, disturbance){
     	if(err){
-    		res.status(500).send({error: "Could not find disturbance with id"});
+    		res.status(500).send({error: "Could not find disturbance " });
     	}else{
     		res.json(disturbance);
     	}
