@@ -17,7 +17,7 @@ class Listview extends Component {
         incident_name={incident.name} 
         incident_notes={incident.notes} 
         incident_lat={incident.lat} 
-        incident_lng={incident.lng}
+        incident_lng={incident.lon}
         incident_time={incident.timestamp}
         incident_status={incident.status}/>
     );

@@ -25,7 +25,7 @@ export default class MapComponent extends Component {
         incident_name={incident.name} 
         incident_notes={incident.notes} 
         lat={incident.lat} 
-        lng={incident.lng}
+        lng={incident.lon}
         incident_time={incident.timestamp}
         incident_status={incident.status}/>
     );

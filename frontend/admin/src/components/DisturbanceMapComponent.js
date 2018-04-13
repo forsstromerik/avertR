@@ -4,6 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import BaseMUI from './BaseMUI';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import Divider from 'material-ui/Divider';
+import moment from 'moment';
 
 class DisturbanceMapComponent extends React.Component {
   //Show incident info
@@ -11,10 +12,18 @@ class DisturbanceMapComponent extends React.Component {
     super(props)
 
     this.state = {
-        show_modal : false
+        show_modal : false,
+        time_diff : ""
     }
   }
 
+  componentWillMount() {
+    var incident_time = Date.parse(this.props.incident_time);
+    var diff = moment(incident_time).fromNow();
+    this.setState({
+      time_diff : diff
+    }) 
+  }
   open_modal= () => {
     this.setState({
       show_modal: !this.state.show_modal 
@@ -27,9 +36,9 @@ class DisturbanceMapComponent extends React.Component {
   
     calc_color() {
       var status = this.props.incident_status;
-      if (status === "active") {
+      if (status === "ACTIVE") {
         return "#f44149";
-      } else if (status === "pending") {
+      } else if (status === "PENDING") {
         return "#e8f441";
       } else {
         return "#41f443"
@@ -77,7 +86,7 @@ class DisturbanceMapComponent extends React.Component {
 
     return (
         <div onClick={this.open_modal} style={divStyle}>
-          <h3>{this.props.incident_name}</h3>
+          <h3>{this.state.time_diff}</h3>
           <Dialog
             style={modalStyle}
             contentStyle={modalStyle}
