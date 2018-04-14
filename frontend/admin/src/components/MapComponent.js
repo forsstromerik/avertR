@@ -14,15 +14,20 @@ export default class MapComponent extends Component {
 
     this.state = ({
       show_suggestions: false,
-      show_suggestion_color : false
+      show_suggestion_color : false,
+      center : {
+        lat: 59.329323,
+        lng: 18.068581
+      }
     });
   } 
 
-  static defaultProps = { center: {
-    lat: 59.329323,
-    lng: 18.068581
-  },
-    zoom: 13
+  static defaultProps = { 
+    center: {
+      lat: 59.329323,
+      lng: 18.068581
+    },
+      zoom: 14
   };
 
   display_suggestions = () =>{
@@ -37,6 +42,16 @@ export default class MapComponent extends Component {
     }) 
   }
 
+  change_pos = () => {
+    var tryCenter = {
+        lat: 59.378062,
+        lng: 15.920754 
+    }
+    this.setState({
+      center : tryCenter
+    })
+  }
+
   //Why.....
   uncolor_suggestions = () => {
     this.setState({
@@ -44,6 +59,15 @@ export default class MapComponent extends Component {
     }) 
   }
 
+  componentWillReceiveProps() {
+    var new_center = {
+      lat : this.props.lat_prop,
+      lng : this.props.lon_prop
+    }
+    this.setState({
+      center : new_center
+    });
+  }
   render() {
     const incidents = this.props.incident_list;
     let suggestions = this.props.suggestion_list;
@@ -61,10 +85,9 @@ export default class MapComponent extends Component {
         incident_show_suggestion_color={this.state.show_suggestion_color}
       />
     );
-
     if (suggestions) {
-      const map_suggestions = suggestions.map((suggestion) =>
-        <div>
+      const map_suggestions = suggestions.map((suggestion, index) =>
+        <div key={index}>
           <Suggestion
             suggested_group={suggestion}
           />
@@ -83,10 +106,12 @@ export default class MapComponent extends Component {
             bootstrapURLKeys={{ "key": "AIzaSyAys6BYpEjD1_HFe8b9O7E-i5yVM6nyQsU" }}
             defaultCenter={this.props.center}
             defaultZoom={this.props.zoom}
+            center={this.state.center}
           >
             <RaisedButton label="List suggestions" onClick={this.display_suggestions} />
             <RaisedButton label="Color suggestions" onClick={this.color_suggestions} />
             <RaisedButton label="Uncolor suggestions" secondary={true} onClick={this.uncolor_suggestions} />
+            <RaisedButton label="Change pos" primary={true} onClick={this.change_pos} />
             {map_incidents}
             <Dialog
               open={this.state.show_suggestions}

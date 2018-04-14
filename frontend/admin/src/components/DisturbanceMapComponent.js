@@ -50,6 +50,8 @@ class DisturbanceMapComponent extends React.Component {
           color = "#f44149";
         } else if (status === "PENDING") {
           color = "#e8f441";
+        } else if (status === "FAULTY"){
+            color = "orange";
         } else {
           color = "#41f443"
         }
@@ -69,8 +71,8 @@ class DisturbanceMapComponent extends React.Component {
       const suggestions = this.props.incident_belonging_suggestions;
       var map_suggestions = ""
       if (suggestions) {
-          map_suggestions = suggestions.map((suggestion) =>
-              <p>
+          map_suggestions = suggestions.map((suggestion, index) =>
+              <p key={index}>
                 {suggestion}
               </p>
           );

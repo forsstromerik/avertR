@@ -19,8 +19,10 @@ class Listview extends Component {
     };
   }
 
-  disturbanceClicked = (id) => {
-    this.setState({ activeDisturbanceID: id });
+  disturbanceClicked = (el) => {
+    this.setState({ activeDisturbanceID: el._id });
+    var coords = [el.lat, el.lon];
+    this.props.callback(coords);
   }
 
   renderIcon = (status) => {
@@ -55,7 +57,7 @@ class Listview extends Component {
               leftAvatar={<Avatar style={avatarStyle} icon={this.renderIcon(el.status)} />}
               primaryText={moment(el.timestamp).format('MMMM Do, h:mm')}
               secondaryText={el.notes}
-              onClick={() => { this.disturbanceClicked(el._id); }} />
+              onClick={() => { this.disturbanceClicked(el); }} />
           );
         })}
       </List>
