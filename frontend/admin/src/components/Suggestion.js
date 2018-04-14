@@ -11,8 +11,23 @@ class Suggestion extends Component {
       }
     }
 
-    group_incidents() {
-      alert("Grouped!");
+    /* Create group */
+    group_incidents = () => {
+      var body = {}
+      var disturbances = this.props.suggested_group;
+      body.disturbances = disturbances;
+      body.notes = "aff";
+      console.log(body);
+      fetch('http://localhost:3000/groups', {
+        method : "POST",
+        body : body
+      })
+      .then(function (res) {
+          return res.json()
+      })
+      .then(function (json) {
+          console.log(json)
+      });
     }
 
     show_modal = () => {
@@ -22,11 +37,10 @@ class Suggestion extends Component {
     }
 
   render() {
-
       const suggested_groups = this.props.suggested_group;
       console.log(suggested_groups);
-      const map_incidents= suggested_groups.map((suggestion) =>
-          <p>
+      const map_incidents= suggested_groups.map((suggestion, index) =>
+          <p key={index} >
             {suggestion}
           </p>
       );
