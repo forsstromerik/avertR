@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import axios from 'axios';
 
+const BASE_URL = 'https://h4s3.inneva.se';
+
 class ReportPhase extends Component {
 
   state = {
@@ -14,7 +16,7 @@ class ReportPhase extends Component {
     let text = document.getElementById("note-entry").value;
     if(text){
       const id = window.location.href.split("/").pop();
-      axios.put(`http://localhost:3000/disturbances/${id}`, {
+      axios.put(`${BASE_URL}/disturbances/${id}`, {
         notes: text,
         status: "ACTIVE"
       })
@@ -29,7 +31,7 @@ class ReportPhase extends Component {
 
   undoHandler = () => {
     const id = window.location.href.split("/").pop();
-    axios.put(`http://localhost:3000/disturbances/${id}`, {
+    axios.put(`${BASE_URL}/disturbances/${id}`, {
       notes: "",
       status: "FAULTY"
     })
@@ -54,7 +56,7 @@ class ReportPhase extends Component {
   }
 
   render(){
-    let { note, disableInput, noteSent } = this.state;
+    let { disableInput, noteSent } = this.state;
     const back = "< Back to start";
     const undo = "< Undo";
     console.log(disableInput);
@@ -125,60 +127,6 @@ class ReportPhase extends Component {
             >{back}</div>
         </div>
       </div>
-      
-
-      /*
-      <Frame>
-        <div className="title">
-          <span>Report sent</span>
-          <p>Fill in the box to add more information to the report</p>
-        </div>
-        {disableInput &&
-        <div className="submit-title">
-         <span>Information sent</span>
-         <p>Click the input area to edit your report</p>         
-        </div>  
-        }
-        {disableInput ? 
-        <div className="sent-module">
-          <div 
-          className="undo-button"
-          onClick={this.undoHandler}
-          >
-            <span>Clicked accidentally? Click here to undo</span>
-          </div>
-          <textarea 
-            readOnly 
-            rows="12" 
-            id="note-entry"
-            onChange={this.textareaChanged}
-            onClick={this.unlockTextareaHandler}></textarea> 
-          <div 
-            className="sent-button"
-            onClick={this.editNoteHandler}
-            >
-            <span>Sent!</span>
-          </div>
-        </div>
-        :
-        <div className="send-module">
-          <div 
-            className="undo-button"
-            onClick={this.undoHandler}
-            >
-            <span>Clicked accidentally? Click here to undo</span>
-          </div>
-          <textarea autoFocus rows="12" id="note-entry"></textarea>
-          <div 
-            className="send-button"
-            onClick={this.sendNoteHandler}
-            >
-            <span>Send</span>
-          </div>           
-        </div>
-        }
-      </Frame>
-      */
     );
   }
 }

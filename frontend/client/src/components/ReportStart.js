@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+const BASE_URL = 'https://h4s3.inneva.se';
+
 class ReportStart extends Component {
 
   state = {
@@ -12,7 +14,7 @@ class ReportStart extends Component {
     this.setState({loading: true});
     const randLat = 59 + Math.random() * 0.5;
     const randLon = 17 + Math.random();
-    axios.post('http://localhost:3000/disturbances', {
+    axios.post(`${BASE_URL}/disturbances`, {
       lat: randLat,
       lon: randLon
     })
