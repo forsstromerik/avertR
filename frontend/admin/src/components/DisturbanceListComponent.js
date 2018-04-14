@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-import AppBar from 'material-ui/AppBar';
-import { Grid, Row, Col } from 'react-flexbox-grid';
 import moment from 'moment';
-
-//Internal
-import DisturbanceInfoModal from './DisturbanceInfoModal';
 
 class DisturbanceListComponent extends Component {
     constructor(props) {

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import AppBar from 'material-ui/AppBar';
 import DisturbanceListComponent from './DisturbanceListComponent.js';
 
 class Listview extends Component {
@@ -10,7 +9,6 @@ class Listview extends Component {
       textAlign : "center",
       width : "100%"
     }
-    console.log(this.props);
     const incidents = this.props.incident_list;
     const list_incidents = incidents.map((incident) => 
       <DisturbanceListComponent key={incident._id} 
