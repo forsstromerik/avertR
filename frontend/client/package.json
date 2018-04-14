@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.18.0",
     "material-ui": "^0.20.0",
     "node-sass": "^4.8.3",
     "react": "^16.3.1",
@@ -13,7 +14,7 @@
   "scripts": {
     "build-css": "node-sass src/styles/main.scss public/main.css",
     "watch-css": "npm run build-css && node-sass src/styles/main.scss public/main.css --watch",
-    "start": "react-scripts start",
+    "start": "PORT=3002 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"

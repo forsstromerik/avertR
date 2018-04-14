@@ -1,17 +1,51 @@
 import React, { Component } from 'react';
-
+import axios from 'axios';
 import Frame from '../hoc/Frame';
+import { withRouter } from 'react-router-dom';
 
 class ReportStart extends Component {
 
-  reportHandler = () => {
-    this.props.history.push({pathname: '/report-phase'});
+  state = {
+    displayUndoInfo: false
   }
+
+  reportHandler = () => {
     
+    axios.post('http://localhost:3000/disturbances', {
+      lat: 59.3293235,
+      lon: 18.068580800000063
+    })
+    .then((response) => {
+      const id = response.data._id;
+      this.props.history.push({pathname: `/report-phase/${id}`});
+    })
+    .catch(function (error) {
+    })
+  }
+
+  componentDidMount() {
+    const id = window.location.href.split("/").pop();
+    if(id) {
+      this.displayUndoInfo();
+    }    
+  }
+
+  displayUndoInfo = () => {
+    this.setState({displayUndoInfo: true});
+    setTimeout(this.hideUndoInfo, 3000);
+  }
+
+  hideUndoInfo = () => {
+    this.setState({displayUndoInfo: false})
+  }
+
   render(){
-    //this.props.history.push({pathname: '/report-phase'});
+      const { displayUndoInfo } = this.state;
       return(
         <Frame>
+          {displayUndoInfo && 
+          <div className="undoInfo">Undone report successfully</div>
+          }
           <div 
             className="report-start-button"
             onClick={this.reportHandler}
@@ -23,5 +57,5 @@ class ReportStart extends Component {
   }
 }
 
-export default ReportStart;
+export default withRouter(ReportStart);
 
