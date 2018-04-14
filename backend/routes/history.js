@@ -5,13 +5,13 @@ const keywords = require('../etc/suggestions-keywords');
 const helpers = require('../etc/helpers');
 
 let convert_to_days ={
-    0 : "Sunday",
-    1 : "Monday",
-    2 : "Tuesday",
-    3: "Wednesday",
-    4: "Thursday",
-    5: "Friday",
-    6: "Saturday"
+    0 : "Sun",
+    1 : "Mon",
+    2 : "Tue",
+    3: "Wed",
+    4: "Thu",
+    5: "Fri",
+    6: "Sat"
 }
 
 let convert_to_interval = {
@@ -30,13 +30,13 @@ router.get('/', function(req, res) {
 	    res.status(500).send({error: "Could not load disturbances"});
 	}else{
 	    let days ={
-		"Monday": 0,
-		"Tuesday": 0,
-		"Wednesday": 0,
-		"Thursday": 0,
-		"Friday": 0,
-		"Saturday": 0,
-		"Sunday": 0
+		"Mon": 0,
+		"Tue": 0,
+		"Wed": 0,
+		"Thu": 0,
+		"Fri": 0,
+		"Sat": 0,
+		"Sun": 0
 	    }
 
 	    let hours = {

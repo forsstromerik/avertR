@@ -22,6 +22,15 @@ router.get('/', function(req, res) {
             delete event['location'];
             event.lat = evtPos.latitude;
             event.lon = evtPos.longitude;
+            event.notes = evt.summary + ' ' + evt.url;
+            delete event['summary'];
+            delete event['url'];
+            event._id = evt.id;
+            delete event['id'];
+            event.status = 'ACTIVE';
+            event.timestamp = evt.datetime;
+            delete event['datetime'];
+
             events.push(event);
         }
     });
