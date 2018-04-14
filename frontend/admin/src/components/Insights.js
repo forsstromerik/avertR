@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
+import BarChart from './BarChart';
+import HeatMapImg from './heatmap.png';
 
 class Insights extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      historyData: null
+      historyData: null,
+      daysChartData: null,
+      hoursChartData: null
     };
   }
 
@@ -15,71 +19,60 @@ class Insights extends Component {
         return res.json()
       }).then(body => {
         this.setState({ historyData: body });
+
+        const daysChartData = {
+          id: 'daysChart',
+          title: 'Disturbances reported by day',
+          keys: Object.keys(this.state.historyData.days),
+          values: Object.values(this.state.historyData.days)
+        };
+        const hoursChartData = {
+          id: 'hoursChart',
+          title: 'Disturbances reported by hour',
+          keys: Object.keys(this.state.historyData.hours),
+          values: Object.values(this.state.historyData.hours),
+          labelCallback: (tooltipItem, data) => {
+            let label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+            if (label) {
+              label += ': ';
+            }
+            label += Math.round(tooltipItem.yLabel * 100) / 100;
+
+            // add percentage
+            let sum = 0;
+            data.datasets[0].data.map(val => {
+              sum += val; 
+            });
+            let percentage = Math.round((tooltipItem.yLabel / sum) * 100)
+
+            return label + ' (' +  percentage + '%)';
+          }
+        };
+        this.setState({ daysChartData, hoursChartData });
       })
   }
 
-  renderCharts() {
-    var ctx = document.getElementById("daysChart").getContext('2d');
-    var myChart = new window.Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: Object.keys(this.state.historyData.days),
-        datasets: [{
-          label: '# of disturbances',
-          data: Object.values(this.state.historyData.days),
-          backgroundColor: 'rgba(31, 188, 211, 0.2)',
-          borderColor: '#1FBCD3',
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero:true
-            }
-          }]
-        }
-      }
-    }); 
-
-
-    var ctx = document.getElementById("hoursChart").getContext('2d');
-    var myChart = new window.Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: Object.keys(this.state.historyData.hours),
-        datasets: [{
-          label: '# of disturbances',
-          data: Object.values(this.state.historyData.hours),
-          backgroundColor: 'rgba(31, 188, 211, 0.2)',
-          borderColor: '#1FBCD3',
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero:true
-            }
-          }]
-        }
-      }
-    }); 
-
-
-  }
-
   render() {
-    if (this.state.historyData) {
-      this.renderCharts();
-    }
-
     return (
       <div>
-        <canvas id="daysChart" class="chart" width="400" height="400"></canvas>
-        <canvas id="hoursChart" class="chart" width="400" height="400"></canvas>
+        <div id="charts-wrapper">
+          <h2>Data insights</h2>
+          <h3>Statistics</h3>
+          <div>
+            {this.state.daysChartData &&
+            <BarChart data={this.state.daysChartData} />
+            }
+            {this.state.hoursChartData &&
+            <BarChart data={this.state.hoursChartData} />
+            }
+          </div>
+        </div>
+        <div style={{ paddingLeft: '50px', margin: '50px 0' }} id="map-wrapper">
+          <h3>Heatmap</h3>
+          <img style={{ width: '50%' }} src={HeatMapImg} />
+
+        </div>
       </div>
     );
   }
