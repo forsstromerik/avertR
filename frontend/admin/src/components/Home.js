@@ -201,10 +201,12 @@ class Home extends Component {
             </Col>
           </Row>
             <ListView
-              show_incidents={this.state.show_incidents}
-              show_groups={this.state.show_groups}
-              show_police={this.state.show_police}
+              display_incidents={this.state.show_incidents}
+              display_groups={this.state.show_groups}
+              display_police={this.state.show_police}
               callback={this.coordinate_callback}
+              police_incidents={this.state.police_events}
+              group_incidents={this.state.groups}
               incident_list={this.state.incidents} />
           </Col>
           <Col xs={9}>
