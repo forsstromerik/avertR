@@ -63,7 +63,7 @@ router.post('/', function(req, res) {
 			res.status(500).send({error: "Could not create group" });
 		}else{
             disturbances.map(d_id => {
-                Disturbance.update({_id: d_id},{$set: {grouped: true }}, function(err, disturbance){
+                Disturbance.update({_id: d_id},{$set: {groupId: group._id }}, function(err, disturbance){
                     if(err){
                         res.status(500).send({error: "Could not find disturbance"});
                     }
