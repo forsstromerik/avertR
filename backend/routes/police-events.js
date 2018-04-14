@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const axios = require('axios');
 const util = require('util');
 const helpers = require('../etc/helpers');
 
