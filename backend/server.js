@@ -14,7 +14,7 @@ const options = {
 };
 mongoose.connect(process.env.DB_URL, options)
     .then(() => {
-        console.log('connected to DB');
+        // do something on success?
     })
     .catch((error) => {
         console.log('could not connect to db. error: ' + error);

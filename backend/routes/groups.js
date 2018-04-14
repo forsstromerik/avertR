@@ -2,30 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Group = require('../models/group');
 const Disturbance = require('../models/disturbance');
-
-const keywords = { 
-    "man" : 1,
-    "dude" : 1,
-    "guy" : 1,
-    "guys" : 1,
-    "men" : 1,
-    "dudes" : 1,
-    "woman" : 2,
-    "lady" : 2,
-    "girl" : 2,
-    "women" : 2,
-    "girls": 2,
-    "ladies" : 2,
-    "drunk" : 3,
-    "wasted" : 3,
-    "intoxicated" : 3,
-    "fight" : 4,
-    "combat" : 4,
-    "battle" : 4 
-}
-
-
-
+const keywords = require('./keywords');
 
 router.get('/suggestions', function(req, res) {
     Disturbance.find({status : "ACTIVE" }).sort({timestamp: -1}).exec(function(err, disturbances) {
@@ -35,7 +12,6 @@ router.get('/suggestions', function(req, res) {
             suggestions = []; 
             disturbances.map((el1) => {
                 var group_suggestion = [ el1._id ];
-
                 disturbances.map((el2) => {
 
                     if(el1._id !== el2._id){
@@ -47,8 +23,18 @@ router.get('/suggestions', function(req, res) {
                         }
                     }
                 });
+
                 if(group_suggestion.length > 1){
-                    suggestions.push(group_suggestion);
+                    let match = false;
+                    suggestions.map(el => {
+                      if(el.sort().join(',')=== group_suggestion.sort().join(',')){
+                        match = true;
+                      }
+                    });
+
+                  if (!match) {
+                        suggestions.push(group_suggestion);
+                  }
                 }
             });
 
@@ -121,21 +107,18 @@ router.delete('/:id', function(req, res) {
 function withinCorrelation(notes1, notes2, correlation_limit){
     let s1 = notes1.toLowerCase().split(" ");
     let s2 = notes2.toLowerCase().split(" ");
-
     let groups = [];
     let matches = 0;
 
-
     s1.map((word) =>{
-        if(keywords.hasOwnProperty(word)){
-            groups.push(keywords.word);
+      if(keywords[word] > 0){
+            groups.push(keywords[word]);
         }
     });
 
     s2.map((word) =>{
-        if(keywords.hasOwnProperty(word)){
-            if(groups.indexOf(keywords.word) !== -1){
-                
+        if(keywords[word] > 0){
+            if(groups.indexOf(keywords[word]) !== -1){
                 matches++;
             }
         }
