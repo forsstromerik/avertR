@@ -3,6 +3,7 @@ import GoogleMapReact from 'google-map-react';
 import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
+import { Grid, Row, Col } from 'react-flexbox-grid';
 
 import DisturbanceMapComponent from './DisturbanceMapComponent';
 import Group from './Group.js';
@@ -27,7 +28,7 @@ export default class MapComponent extends Component {
       lat: 59.329323,
       lng: 18.068581
     },
-      zoom: 14
+      zoom: 11
   };
 
   display_suggestions = () =>{
@@ -69,11 +70,16 @@ export default class MapComponent extends Component {
     });
   }
   render() {
+    console.log(this.props.group_incidents);
     const incidents = this.props.incident_list;
     let suggestions = this.props.suggestion_list;
     if (!suggestions) { suggestions = []; }
+    //User reported incidents
     const map_incidents = incidents.map((incident) => 
       <DisturbanceMapComponent 
+        display={this.props.show_incidents}
+        group_id={this.props.groupId}
+        groups_displayed={this.props.show_groups}
         key={incident._id} 
         incident_name={incident.name} 
         incident_notes={incident.notes} 
@@ -85,6 +91,39 @@ export default class MapComponent extends Component {
         incident_show_suggestion_color={this.state.show_suggestion_color}
       />
     );
+    //Police incidents
+    var police_incidents = []
+    if (this.props.police_incidents) {
+        police_incidents = this.props.police_incidents.map((incident) => 
+          <DisturbanceMapComponent 
+            display={this.props.show_police}
+            key={incident.id} 
+            incident_name={incident.name} 
+            incident_notes={incident.summary} 
+            lat={incident.lat} 
+            lng={incident.lon}
+            incident_time={incident.datetime}
+            police_event={true}
+          />
+        );
+    }
+    //Group incidents
+    var group_incidents = [];
+    if (this.props.group_incidents) {
+        group_incidents = this.props.group_incidents.map((group) => 
+          <DisturbanceMapComponent 
+            display={this.props.show_groups}
+            key={group.id} 
+            incident_name={group.name} 
+            incident_notes={group.summary} 
+            lat={group.disturbances[0].lat} 
+            lng={group.disturbances[0].lon}
+            incident_time={group.timestamp}
+            group_event={true}
+          />
+        );
+    }
+
     if (suggestions) {
       const map_suggestions = suggestions.map((suggestion, index) =>
         <div key={index}>
@@ -108,10 +147,10 @@ export default class MapComponent extends Component {
             defaultZoom={this.props.zoom}
             center={this.state.center}
           >
-            <RaisedButton label="List suggestions" onClick={this.display_suggestions} />
-            <RaisedButton label="Color suggestions" onClick={this.color_suggestions} />
-            <RaisedButton label="Uncolor suggestions" secondary={true} onClick={this.uncolor_suggestions} />
-            <RaisedButton label="Change pos" primary={true} onClick={this.change_pos} />
+                <RaisedButton label="List suggestions" onClick={this.display_suggestions} />
+                <RaisedButton label="Color suggestions" onClick={this.color_suggestions} />
+                <RaisedButton label="Uncolor suggestions" secondary={true} onClick={this.uncolor_suggestions} />
+                <RaisedButton label="Change pos" primary={true} onClick={this.change_pos} />
             {map_incidents}
             <Dialog
               open={this.state.show_suggestions}
@@ -121,6 +160,8 @@ export default class MapComponent extends Component {
               {map_suggestions}
             </Dialog>
             {map_incidents}
+            {police_incidents}
+            {group_incidents}
           </GoogleMapReact>
         </div>
       );

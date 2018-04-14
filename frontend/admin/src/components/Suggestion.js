@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
+var axios = require('axios');
 
 class Suggestion extends Component {
     constructor(props) {
@@ -13,21 +14,19 @@ class Suggestion extends Component {
 
     /* Create group */
     group_incidents = () => {
-      var body = {}
-      var disturbances = this.props.suggested_group;
-      body.disturbances = disturbances;
-      body.notes = "aff";
-      console.log(body);
-      fetch('http://localhost:3000/groups', {
-        method : "POST",
-        body : body
-      })
-      .then(function (res) {
-          return res.json()
-      })
-      .then(function (json) {
-          console.log(json)
-      });
+        console.log("Grouping.")
+        var disturbances = this.props.suggested_group;
+        var disturbances_ID_list = []
+        for (var i = 0; i < disturbances.length; i++) {
+          disturbances_ID_list.push(disturbances[i]._id);
+        }
+        var body = {}
+        body.disturbances = disturbances_ID_list;
+        console.log(disturbances);
+        axios.post('http://localhost:3000/groups', body)
+          .then(function(response){
+            console.log(response);
+      });  
     }
 
     show_modal = () => {
@@ -41,7 +40,7 @@ class Suggestion extends Component {
       console.log(suggested_groups);
       const map_incidents= suggested_groups.map((suggestion, index) =>
           <p key={index} >
-            {suggestion}
+            {suggestion.notes}
           </p>
       );
       const actions = [

@@ -9,13 +9,15 @@ import PendingIcon from 'material-ui/svg-icons/action/info';
 import ActiveIcon from 'material-ui/svg-icons/action/report-problem';
 import ResolvedIcon from 'material-ui/svg-icons/action/verified-user';
 import ClosedIcon from 'material-ui/svg-icons/navigation/close';
+import { Grid, Row, Col } from 'react-flexbox-grid';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class Listview extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      activeDisturbanceID: 0
+      activeDisturbanceID: 0,
     };
   }
 
@@ -41,13 +43,13 @@ class Listview extends Component {
     const incidents = this.props.incident_list;
 
     return (
+      <div>
       <List>
         <Subheader>Disturbances</Subheader>
         {incidents.map(el => {
           if (!el.notes) {
             el.notes = 'No notes available'; 
           }
-
           const avatarStyle = {
             backgroundColor: this.state.activeDisturbanceID === el._id ? '#1FBCD3' : 'rgb(117, 117, 117)'
           };
@@ -61,6 +63,7 @@ class Listview extends Component {
           );
         })}
       </List>
+      </div>
     );
   }
 }

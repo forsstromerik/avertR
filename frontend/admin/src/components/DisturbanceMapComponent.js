@@ -42,6 +42,11 @@ class DisturbanceMapComponent extends React.Component {
 
   calc_color = ()  => {
     var color = "black";
+    if (this.props.police_event) {
+      color = "grey";
+    } else if (this.props.group_event){
+      color = "purple";
+    } else
     if (this.state.incident_show_suggestion_color) {
         color = "blue";
     } else {
@@ -78,6 +83,7 @@ class DisturbanceMapComponent extends React.Component {
           );
       }
       const divStyle = {
+        display : this.props.display,
         borderRadius: "50%",
         height: "50px",
         width: "50px",
