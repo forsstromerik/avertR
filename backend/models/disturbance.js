@@ -6,7 +6,7 @@ var DisturbanceSchema = new mongoose.Schema({
     timestamp: { type: Date, default: Date.now },
     notes: { type: String },
     status: { type: String, default: "PENDING" },
-	groupId: { type: mongoose.Schema.ObjectId, ref: 'Group' } 
+	groupId: { type: mongoose.Schema.ObjectId, ref: 'Group' , default: null} 
 });
 
 module.exports = mongoose.model('Disturbance', DisturbanceSchema);
