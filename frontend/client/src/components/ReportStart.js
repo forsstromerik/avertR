@@ -1,23 +1,25 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Frame from '../hoc/Frame';
-import { withRouter } from 'react-router-dom';
 
 class ReportStart extends Component {
 
   state = {
-    displayUndoInfo: false
+    displayUndoInfo: false,
+    loading: false
   }
 
   reportHandler = () => {
-    
-    //TODO: Don't have hardcoded lat and lon
+    this.setState({loading: true});
+    const randLat = 59 + Math.random() * 0.5;
+    const randLon = 17 + Math.random();
     axios.post('http://localhost:3000/disturbances', {
-      lat: 59.3293235,
-      lon: 18.068580800000063
+      lat: randLat,
+      lon: randLon
     })
     .then((response) => {
       const id = response.data._id;
+      this.setState({loading: false});      
       this.props.history.push({pathname: `/report-phase/${id}`});
     })
     .catch(function (error) {
@@ -42,22 +44,41 @@ class ReportStart extends Component {
   }
 
   render(){
-      const { displayUndoInfo } = this.state;
+      const { displayUndoInfo, loading } = this.state;
       return(
         <Frame>
           {displayUndoInfo && 
           <div className="undoInfo">Undone report successfully</div>
           }
+          {loading ?
+          <div className="sk-circle">
+            <div className="sk-circle1 sk-child"></div>
+            <div className="sk-circle2 sk-child"></div>
+            <div className="sk-circle3 sk-child"></div>
+            <div className="sk-circle4 sk-child"></div>
+            <div className="sk-circle5 sk-child"></div>
+            <div className="sk-circle6 sk-child"></div>
+            <div className="sk-circle7 sk-child"></div>
+            <div className="sk-circle8 sk-child"></div>
+            <div className="sk-circle9 sk-child"></div>
+            <div className="sk-circle10 sk-child"></div>
+            <div className="sk-circle11 sk-child"></div>
+            <div className="sk-circle12 sk-child"></div>
+          </div> :
           <div 
             className="report-start-button"
             onClick={this.reportHandler}
             >
             <span>Report</span>
           </div>
+          }
+          <div className="emergency-info">
+            Emergency? Do not use this service! Instead, <span>call 112.</span>
+          </div>
         </Frame>
       );
   }
 }
 
-export default withRouter(ReportStart);
+export default ReportStart;
 
