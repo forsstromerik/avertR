@@ -70,7 +70,6 @@ export default class MapComponent extends Component {
     });
   }
   render() {
-    console.log(this.props.group_incidents);
     const incidents = this.props.incident_list;
     let suggestions = this.props.suggestion_list;
     if (!suggestions) { suggestions = []; }
