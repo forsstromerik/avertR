@@ -27,6 +27,7 @@ let days ={
 let hours = {
 }
 
+let location = [];
 
 router.get('/', function(req, res) {
     Disturbance.find({status : "ACTIVE"}).sort({timestamp: -1}).exec(function(err, disturbances) {
@@ -44,8 +45,22 @@ router.get('/', function(req, res) {
     			}else{
     				hours[hour] = 1;
     			}
+    			let pos = {'latitude' : d.lat, 'longitude': d.lon};
+    			let grouped = false;
+				for (var i = 0; i < location.length; i++) { 
+    				let pos_group = {'latitude' : location[i].latitude, 'longitude': location[i].longitude};
+				    if(helpers.withinRadius(pos_group, pos , 0.5)){
+				    	location[i].events++;
+				    	grouped = true;
+				    }
+				}
+				if(!grouped){
+					let new_loc = {'latitude' : d.lat, 'longitude': d.lon, 'events': 1};
+					location.push(new_loc);
+				}
     		});
-    		res.json({ 'days': days, 'hours': hours});
+
+    		res.json({ 'days': days, 'hours': hours, 'locations':location});
     	}
     });
 });
