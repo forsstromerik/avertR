@@ -115,7 +115,7 @@ class DisturbanceMapComponent extends React.Component {
                 </CardText>
             </Card>
            <RaisedButton primary={true} onClick={this.open_modal} label="Close"/> 
-           <RaisedButton primary={true} onClick={this.dispatch_guard} label="Dispatch guard"/> 
+           <RaisedButton secondary={true} onClick={this.dispatch_guard} label="Delete"/> 
         </div>
       ]
 
