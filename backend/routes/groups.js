@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Group = require('../models/group');
 const Disturbance = require('../models/disturbance');
-const keywords = require('./keywords');
+const keywords = require('../etc/suggestions-keywords');
 
 router.get('/suggestions', function(req, res) {
     Disturbance.find({status : "ACTIVE" }).sort({timestamp: -1}).exec(function(err, disturbances) {
