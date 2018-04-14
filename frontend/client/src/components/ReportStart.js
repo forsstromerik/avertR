@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Frame from '../hoc/Frame';
 
 class ReportStart extends Component {
 
@@ -29,6 +28,7 @@ class ReportStart extends Component {
   componentDidMount() {
     const id = window.location.href.split("/").pop();
     if(id) {
+      this.props.history.push({pathname: '/'});        
       this.displayUndoInfo();
     }    
   }
@@ -40,42 +40,51 @@ class ReportStart extends Component {
 
   hideUndoInfo = () => {
     this.setState({displayUndoInfo: false})
-    this.props.history.push({pathname: '/'});    
   }
 
   render(){
       const { displayUndoInfo, loading } = this.state;
       return(
-        <Frame>
-          {displayUndoInfo && 
-          <div className="undoInfo">Undone report successfully</div>
-          }
-          {loading ?
-          <div className="sk-circle">
-            <div className="sk-circle1 sk-child"></div>
-            <div className="sk-circle2 sk-child"></div>
-            <div className="sk-circle3 sk-child"></div>
-            <div className="sk-circle4 sk-child"></div>
-            <div className="sk-circle5 sk-child"></div>
-            <div className="sk-circle6 sk-child"></div>
-            <div className="sk-circle7 sk-child"></div>
-            <div className="sk-circle8 sk-child"></div>
-            <div className="sk-circle9 sk-child"></div>
-            <div className="sk-circle10 sk-child"></div>
-            <div className="sk-circle11 sk-child"></div>
-            <div className="sk-circle12 sk-child"></div>
-          </div> :
-          <div 
-            className="report-start-button"
-            onClick={this.reportHandler}
-            >
-            <span>Report</span>
+        <div className="start-container">
+          <div className="upper-half">
+            <div className="burger">
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+            <i className="fas fa-cog cog-class"></i>
+            <p>Disturbance Reporter</p>
+            <span>Are you in an emergency? Call 112.</span>
           </div>
-          }
-          <div className="emergency-info">
-            Emergency? Do not use this service! Instead, <span>call 112.</span>
+          <div className="bottom-half">
+            {displayUndoInfo && 
+            <div className="undoInfo">Successfully removed report </div>
+            }
+            {loading ?
+            <div className="sk-circle">
+              <div className="sk-circle1 sk-child"></div>
+              <div className="sk-circle2 sk-child"></div>
+              <div className="sk-circle3 sk-child"></div>
+              <div className="sk-circle4 sk-child"></div>
+              <div className="sk-circle5 sk-child"></div>
+              <div className="sk-circle6 sk-child"></div>
+              <div className="sk-circle7 sk-child"></div>
+              <div className="sk-circle8 sk-child"></div>
+              <div className="sk-circle9 sk-child"></div>
+              <div className="sk-circle10 sk-child"></div>
+              <div className="sk-circle11 sk-child"></div>
+              <div className="sk-circle12 sk-child"></div>
+            </div> :
+            <div 
+              className="report-start-button"
+              onClick={this.reportHandler}
+              >
+              <span>Report</span>
+            </div>
+            }
+            
           </div>
-        </Frame>
+        </div>
       );
   }
 }
