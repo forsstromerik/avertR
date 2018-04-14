@@ -122,7 +122,7 @@ function withinCorrelation(notes1, notes2, correlation_limit){
         }
     });
 
-    let correlation = matches / Math.max(groups1.length, groups2.length, 1);
+    let correlation = matches / 4;
     return(correlation > correlation_limit);
 }
 function withinTimeFrame(time1, time2, msec){
