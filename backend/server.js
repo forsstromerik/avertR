@@ -32,6 +32,7 @@ app.use(cors());
 app.use('/', require('./routes/base'));
 app.use('/disturbances', require('./routes/disturbances'));
 app.use('/groups', require('./routes/groups'));
+app.use('/police/events', require('./routes/police-events'));
 
 /* 404 */
 app.use(function(req, res, next) {

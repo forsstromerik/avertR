@@ -3,6 +3,7 @@ const router = express.Router();
 const Group = require('../models/group');
 const Disturbance = require('../models/disturbance');
 const keywords = require('../etc/suggestions-keywords');
+const helpers = require('../etc/helpers');
 
 router.get('/suggestions', function(req, res) {
     Disturbance.find({status : "ACTIVE" }).sort({timestamp: -1}).exec(function(err, disturbances) {
@@ -18,7 +19,7 @@ router.get('/suggestions', function(req, res) {
                         let el1_pos = {latitude : el1.lat, longitude : el1.lon};
                         let el2_pos = {latitude : el2.lat, longitude : el2.lon};
 
-                        if(withinRadius(el1_pos, el2_pos, 1) && withinTimeFrame(el1.timestamp, el2.timestamp, 1200000) && withinCorrelation(el1.notes, el2.notes, 0.4) ){
+                        if(helpers.withinRadius(el1_pos, el2_pos, 0.2) && withinTimeFrame(el1.timestamp, el2.timestamp, 1200000) && withinCorrelation(el1.notes, el2.notes, 0.4) ){
                             group_suggestion.push(el2._id);
                         }
                     }
@@ -137,21 +138,5 @@ function withinTimeFrame(time1, time2, msec){
     let diff = Math.abs(d1-d2);
     return (diff <= msec);
 }
-
-function withinRadius(point1, point2, kms) {
-  let R = 6371;
-  let deg2rad = (n) => { return Math.tan(n * (Math.PI/180)) };
-
-  let dLat = deg2rad(point2.latitude - point1.latitude );
-  let dLon = deg2rad( point2.longitude - point1.longitude );
-
-  let a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(deg2rad(point1.latitude)) * Math.cos(deg2rad(point2.latitude)) * Math.sin(dLon/2) * Math.sin(dLon/2);
-  let c = 2 * Math.asin(Math.sqrt(a));
-  let d = R * c;
-
-  return (d <= kms);
-}
-
-
 
 module.exports = router;
