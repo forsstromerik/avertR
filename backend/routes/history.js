@@ -14,6 +14,16 @@ let convert_to_days ={
     6: "Saturday"
 }
 
+let convert_to_interval = {
+	0: '00-03',
+	3: '03-06',
+	6: '06-09',
+	9: '09-12',
+	12: '12-15',
+	15: '15-18',
+	18: '18-21',
+	21: '21-00',
+}
 router.get('/', function(req, res) {
     Disturbance.find({status : "ACTIVE"}).sort({timestamp: -1}).exec(function(err, disturbances) {
 	if(err){
@@ -30,6 +40,14 @@ router.get('/', function(req, res) {
 	    }
 
 	    let hours = {
+	    	'00-03' : 0,
+	    	'03-06' : 0,
+	    	'06-09' : 0,
+	    	'09-12' : 0,
+	    	'12-15' : 0,
+	    	'15-18' : 0,
+	    	'18-21' : 0,
+	    	'21-00' : 0,
 	    }
 
 	    let location = [];
@@ -40,11 +58,10 @@ router.get('/', function(req, res) {
 		let day = date.getDay();
 		days[convert_to_days[day]]++;
 
-		if(hours[hour] > 0){
-		    hours[hour]++;
-		}else{
-		    hours[hour] = 1;
-		}
+		let interval = hour - hour % 3;
+
+		hours[convert_to_interval[interval]]++;
+
 		let pos = {'latitude' : d.lat, 'longitude': d.lon};
 		let grouped = false;
 		for (var i = 0; i < location.length; i++) { 
