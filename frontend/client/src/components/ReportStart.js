@@ -11,6 +11,7 @@ class ReportStart extends Component {
 
   reportHandler = () => {
     
+    //TODO: Don't have hardcoded lat and lon
     axios.post('http://localhost:3000/disturbances', {
       lat: 59.3293235,
       lon: 18.068580800000063
@@ -37,6 +38,7 @@ class ReportStart extends Component {
 
   hideUndoInfo = () => {
     this.setState({displayUndoInfo: false})
+    this.props.history.push({pathname: '/'});    
   }
 
   render(){
