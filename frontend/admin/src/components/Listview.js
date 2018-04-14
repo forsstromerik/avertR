@@ -9,6 +9,7 @@ import PendingIcon from 'material-ui/svg-icons/action/info';
 import ActiveIcon from 'material-ui/svg-icons/action/report-problem';
 import ResolvedIcon from 'material-ui/svg-icons/action/verified-user';
 import ClosedIcon from 'material-ui/svg-icons/navigation/close';
+import Gavel from 'material-ui/svg-icons/action/gavel';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import RaisedButton from 'material-ui/RaisedButton';
 
@@ -31,7 +32,10 @@ class Listview extends Component {
     this.props.callback(coords);
   }
 
-  renderIcon = (status) => {
+  renderIcon = (status, is_police) => {
+    if (is_police == 'POLICE') {
+      return (<Gavel />);
+    } else
     if (status === 'PENDING') {
       return (<PendingIcon />); 
     } else if (status === 'ACTIVE') {
@@ -82,6 +86,21 @@ class Listview extends Component {
     }
   }
 
+  calc_color = (info) => {
+    if (info._id === this.state.activeDisturbanceID) {
+      return "#1FDBCD3";
+    } else if (info.type === "POLICE") {
+      return "grey";
+    } else if (info.status === "ACTIVE"){
+      return "red"
+    } else if (info.status === "PENDING"){
+      return "yellow";
+    } else {
+      return "grey";
+    }
+    //backgroundColor: this.state.activeDisturbanceID === el._id ? '#1FBCD3' : 'rgb(117, 117, 117)'
+  }
+
   render() {
       if (this.props.police_incidents.length > 0 && this.props.group_incidents.length > 0 && this.props.incident_list.length > 0 && this.state.biggest_list.length == 0) {
         this.buildList();
@@ -96,15 +115,15 @@ class Listview extends Component {
             el.notes = 'No notes available'; 
           }
           const avatarStyle = {
-            backgroundColor: this.state.activeDisturbanceID === el._id ? '#1FBCD3' : 'rgb(117, 117, 117)'
+            backgroundColor: this.calc_color(el)
           };
           const styles = {
               display: this.isVisible(el.type)
           };
           return (
             <ListItem
-              key={el._id}
-              leftAvatar={<Avatar style={avatarStyle} icon={this.renderIcon(el.status)} />}
+              key={el._id }
+              leftAvatar={<Avatar style={avatarStyle} icon={this.renderIcon(el.status, el.type)} />}
               primaryText={moment(el.timestamp).format('MMMM Do, h:mm')}
               secondaryText={el.notes}
               style={styles}

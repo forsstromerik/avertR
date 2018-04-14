@@ -19,7 +19,9 @@ export default class MapComponent extends Component {
       center : {
         lat: 59.329323,
         lng: 18.068581
-      }
+      },
+      current_lat : 59.329323,
+      current_lon : 18.068581
     });
   } 
 
@@ -66,8 +68,11 @@ export default class MapComponent extends Component {
       lng : this.props.lon_prop
     }
     this.setState({
-      center : new_center
+      center : new_center,
+      current_lat : this.props.lat_prop,
+      current_lon : this.props.lon_prop
     });
+    console.log("new comp!");
   }
   render() {
     const incidents = this.props.incident_list;
@@ -98,10 +103,10 @@ export default class MapComponent extends Component {
             display={this.props.show_police}
             key={incident.id} 
             incident_name={incident.name} 
-            incident_notes={incident.summary} 
+            incident_notes={incident.notes} 
             lat={incident.lat} 
             lng={incident.lon}
-            incident_time={incident.datetime}
+            incident_time={incident.timestamp}
             police_event={true}
           />
         );
@@ -146,10 +151,12 @@ export default class MapComponent extends Component {
             defaultZoom={this.props.zoom}
             center={this.state.center}
           >
-                <RaisedButton label="List suggestions" onClick={this.display_suggestions} />
-                <RaisedButton label="Color suggestions" onClick={this.color_suggestions} />
-                <RaisedButton label="Uncolor suggestions" secondary={true} onClick={this.uncolor_suggestions} />
-                <RaisedButton label="Change pos" primary={true} onClick={this.change_pos} />
+            <div
+              style={{width: "100px", height:"100px", backgroundColor: "orange"}}
+              lat={this.state.current_lat}
+              lng={this.state.current_lon}
+            >
+            </div>
             {map_incidents}
             <Dialog
               open={this.state.show_suggestions}
@@ -162,6 +169,17 @@ export default class MapComponent extends Component {
             {police_incidents}
             {group_incidents}
           </GoogleMapReact>
+
+
+            <RaisedButton secondary={true} 
+              label="List suggestions"
+              onClick={this.display_suggestions}
+              style={{
+                position : "absolute",
+                marginTop: "-700px"
+              }}
+            />
+
         </div>
       );
     }

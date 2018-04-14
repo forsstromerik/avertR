@@ -3,6 +3,7 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import ListView from './Listview';
 import MapComponent from './MapComponent';
 import RaisedButton from 'material-ui/RaisedButton';
+import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
 class Home extends Component {
   constructor(props) {
@@ -30,6 +31,15 @@ class Home extends Component {
           show_incidents : "block"
         });
     }
+  }
+
+  convert_to_bool = (string) => {
+    if (string === 'block') {
+      return true 
+    } else {
+      return false 
+    }
+    console.log(string);
   }
 
   toggle_groups = () => {
@@ -179,24 +189,25 @@ class Home extends Component {
       <Grid fluid style={{ maxHeight: '700px' }}>
         <Row>
           <Col xs={3} style={{ maxHeight: '700px', overflow: 'scroll' }}>
-          <Row>
+          <Row style={{marginTop: "5px"}}>
             <Col md={4}>
                 <RaisedButton 
                   label="Incidents" 
-                  primary={true}
+                  secondary={this.convert_to_bool(this.state.show_incidents)}
                   onClick={this.toggle_incidents}
                 />
             </Col>
             <Col md={4}>
                 <RaisedButton 
                   label="Groups" 
-                  secondary={true}
+                  secondary={this.convert_to_bool(this.state.show_groups)}
                   onClick={this.toggle_groups}
             />
             </Col>
             <Col>
                 <RaisedButton 
                   label="Police" 
+                  secondary={this.convert_to_bool(this.state.show_police)}
                   onClick={this.toggle_police}
                 />
             </Col>
