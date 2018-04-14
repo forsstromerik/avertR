@@ -195,7 +195,8 @@ class Home extends Component {
             />
             </Col>
             <Col>
-                <RaisedButton label="Police" 
+                <RaisedButton 
+                  label="Police" 
                   onClick={this.toggle_police}
                 />
             </Col>
