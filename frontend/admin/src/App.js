@@ -2,90 +2,62 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import AppBar from 'material-ui/AppBar';
+import Home from './components/Home';
+import Insights from './components/Insights';
+import Drawer from 'material-ui/Drawer'; import MenuItem from 'material-ui/MenuItem';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Grid, Row, Col } from 'react-flexbox-grid';
-
-//Internal components
-import ListView from './components/Listview';
-import MapComponent from './components/MapComponent';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 
 class App extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-          incidents : []
-      }
+  constructor(props) {
+    super(props);
+    this.state = {
+      incidents : [],
+      open: false
+    }
   }
 
-  componentWillMount() {
-    console.log("Fetching..");
-    this.fetch_incidents();
-  }
 
-  fetch_incidents () {
-    fetch('http://localhost:3000/disturbances', {
-      method: 'GET',
-      headers: {'Content-type': 'application/x-www-form-urlencoded;charset=UTF-8',
-                },
-  })
-  .then(function (res) {
-      return res.json()
-  })
-  .then(function (json) {
-      console.log(json);
-      this.setState({
-        incidents : json
-      })
-    }.bind(this))
-    .catch((error) => {
-      console.log(error);
-    });
+  toggleDrawer = () => {
+    this.setState({ open: !this.state.open }); 
   }
 
   render() {
-  return (
-    <MuiThemeProvider>
-      <div>
-        <AppBar
-          title="Disturbance Listener"
-        />
-          <Grid fluid>
-            <Row>
-            <Col xs={4}>
-                <ListView incident_list={this.state.incidents}/>
-            </Col>
-            <Col xs={8}>
-                <MapComponent incident_list={this.state.incidents}/>
-            </Col>
-            </Row>
-          </Grid>
-      </div>
-    </MuiThemeProvider>
-  )
-}
+    const style = {
+      textDecoration: 'none',
+      color: 'black'
+    };
+
+    return (
+      <MuiThemeProvider>
+        <BrowserRouter>
+          <div>
+            <AppBar
+              title="DisturbanceReporter"
+              onLeftIconButtonClick={this.toggleDrawer}
+            />
+            <Drawer
+              docked={false}
+              width={300}
+              open={this.state.open}
+              onRequestChange={(open) => this.setState({open})}>
+              <Link style={style} to="/" onClick={this.toggleDrawer}>
+                <MenuItem>Home</MenuItem>
+              </Link>
+              <Link style={style} to="/insights" onClick={this.toggleDrawer}>
+                <MenuItem>Insights</MenuItem>
+              </Link>
+            </Drawer>
+
+            <Route exact path="/" component={Home}/>
+            <Route path="/insights" component={Insights}/>
+
+          </div>
+        </BrowserRouter>
+      </MuiThemeProvider>
+    )
+  }
 }
 
 export default App;
-/*
-            {_id : "1",
-            name : "Incident One",
-            notes : "Fight fight",
-            lat: 59.329240,
-            lng: 18.066542,
-            timestamp : "18:47",
-            status: "pending"},
-            {_id : "2",
-            name : "Incident Two",
-            notes : "Borgare",
-            lat: 59.329640,
-            lng: 18.062616,
-            timestamp : "20:34",
-            status: "resolved"},
-            {_id : "3",
-            name : "Incident Three",
-            notes : "Kugga ALLT",
-            lat: 59.329940,
-            lng: 18.070040,
-            timestamp : "21:19",
-            status: "active"}
-  */

@@ -3,22 +3,19 @@ import GoogleMapReact from 'google-map-react';
 import DisturbanceMapComponent from './DisturbanceMapComponent';
 
 export default class MapComponent extends Component {
-    constructor(props) {
-      super(props)
-
-      console.log(props);
-    }
+  constructor(props) {
+    super(props)
+  }
   static defaultProps = {
     center: {
-        lat:59.329323,
-        lng:18.068581
+      lat: 59.329323,
+      lng: 18.068581
     },
-    zoom: 11
+    zoom: 13
   };
 
   render() {
     const incidents = this.props.incident_list;
-    console.log(incidents);
     const map_incidents = incidents.map((incident) => 
       <DisturbanceMapComponent 
         key={incident._id} 
@@ -31,22 +28,15 @@ export default class MapComponent extends Component {
     );
     return (
       // Important! Always set the container height explicitly
-      <div style={{ height: '100vh', width: '100%' }}>
+      <div style={{ height: '700px', width: '100%' }}>
         <GoogleMapReact
           bootstrapURLKeys={{ "key": "AIzaSyAys6BYpEjD1_HFe8b9O7E-i5yVM6nyQsU" }}
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}
         >
-        {map_incidents}
+          {map_incidents}
         </GoogleMapReact>
       </div>
     );
   }
 }
-
-
-          //<DisturbanceMapComponent
-            //lat={59.329323}
-            //lng={18.068581}
-            //text={'Kreyser Avrora'}
-          ///>
