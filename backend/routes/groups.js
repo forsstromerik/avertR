@@ -15,7 +15,7 @@ router.get('/suggestions', function(req, res) {
                 var group_suggestion = [ el1 ];
                 disturbances.map((el2) => {
 
-                    if(el1._id !== el2._id){
+                    if(el1._id !== el2._id && !el1.groupId && !el2.groupId){ 
                         let el1_pos = {latitude : el1.lat, longitude : el1.lon};
                         let el2_pos = {latitude : el2.lat, longitude : el2.lon};
 
