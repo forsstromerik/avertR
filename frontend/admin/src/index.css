@@ -21,3 +21,8 @@ body {
   text-align: left;
   flex-basis: 80%;
 }
+
+.chart{
+  width: 400px !important;
+  height: 400px !important;
+}

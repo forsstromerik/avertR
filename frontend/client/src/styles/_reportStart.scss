@@ -19,3 +19,27 @@
 .report-start-button:active{
   background-color: rgb(163, 0, 0);
 }
+
+.undoInfo {
+  position: fixed;
+  width: 100%;
+  text-align: center;
+  top: 120px;
+  font-size: 3rem;
+  color: white;
+  animation-name: fadeOut;
+  animation-duration: 3s;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

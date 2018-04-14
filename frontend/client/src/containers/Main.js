@@ -13,7 +13,7 @@ class Main extends Component {
            <BrowserRouter>
             <Switch>
               <Route path="/report-phase" component={ReportPhase} />
-              <Route path="/" exact component={ReportStart} />
+              <Route path="/" component={ReportStart} />
             </Switch>
           </BrowserRouter>
         );
