@@ -3,8 +3,9 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  font-family: 'Roboto', sans-serif; }
+  height: 100%; }
+  #root * {
+    font-family: 'Raleway', sans-serif; }
 
 .frame {
   display: flex;
@@ -28,7 +29,8 @@
     background-color: #f2f9fe;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end; }
+    justify-content: flex-end;
+    align-items: center; }
     .start-container .upper-half .burger {
       position: fixed;
       height: 60px;
@@ -52,42 +54,46 @@
       margin-bottom: 25px;
       color: grey;
       font-size: 1.5rem;
-      font-style: italic; }
+      font-style: italic;
+      width: 80%; }
     .start-container .upper-half p {
       text-align: center;
       font-size: 2.5rem;
       margin-left: auto;
       margin-right: auto;
-      margin-bottom: 35%;
-      font-weight: 700;
-      color: #323e49; }
+      margin-bottom: auto;
+      font-weight: 500;
+      color: #323e49;
+      margin-top: auto;
+      width: 95%; }
   .start-container .bottom-half {
     width: 100%;
     height: 50%;
     flex-basis: 50%;
-    background-color: #323e49;
+    background-color: #042235;
     display: flex;
     justify-content: center;
     align-items: center; }
 
 .report-start-button {
-  height: 180px;
-  width: 320px;
+  height: 160px;
+  width: 300px;
   border-radius: 30px;
   box-shadow: 5px 5px 40px #111;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: red;
+  background-color: #DA1617;
   margin: auto; }
   .report-start-button span {
-    font-weight: 700;
+    font-weight: 500;
     font-size: 3rem; }
 
 .report-start-button:active {
   background-color: #a30000; }
 
 .undoInfo {
+  padding-top: 10px;
   position: absolute;
   width: 60%;
   text-align: center;
@@ -254,117 +260,230 @@
   .emergency-info span {
     text-decoration: underline; }
 
-.title {
-  position: absolute;
-  top: 25px;
-  font-size: 2rem;
+.second-upper-half {
   width: 100%;
-  height: 100px;
-  flex-basis: 30%; }
-  .title span {
-    font-weight: 700;
-    padding-left: 25px;
-    color: white; }
-  .title p {
-    padding-left: 25px;
-    font-size: 0.9rem;
-    color: black; }
-
-.submit-title {
-  position: absolute;
-  top: 120px;
-  font-size: 2rem;
-  width: 100%;
-  height: 100px;
-  flex-basis: 30%; }
-  .submit-title span {
-    font-weight: 700;
-    padding-left: 25px;
-    color: white; }
-  .submit-title p {
-    padding-left: 25px;
-    font-size: 0.9rem;
-    color: black; }
-
-.undo-button {
-  box-shadow: 0 0 15px #000;
-  background-color: #f1cf34;
+  height: 50%;
+  flex-basis: 50%;
+  background-color: #F2F9FE;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  position: absolute;
-  bottom: 456px;
-  left: 0;
-  width: 100%;
-  height: 100px;
-  cursor: pointer; }
-  .undo-button span {
-    color: white;
+  align-items: center; }
+  .second-upper-half .undo-button {
+    position: fixed;
+    top: 25px;
+    left: 25px;
+    width: 90px;
+    height: 40px;
+    background-color: #DA1617;
+    color: #0F2F44;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    animation-name: buttonFadeIn;
+    animation-duration: 2s; }
+  .second-upper-half span {
+    z-index: 1;
     font-size: 2rem;
+    animation-duration: 0.85s;
+    animation-name: loadTextRight;
+    width: 60%;
+    text-align: center;
+    padding-bottom: 25px; }
+  .second-upper-half .completed {
+    animation-name: fadeIn;
+    animation-duration: 0.85s;
+    animation-timing-function: ease-in; }
+  .second-upper-half .checkmarks {
+    display: flex;
+    justify-content: space-between; }
+    .second-upper-half .checkmarks .checkmark {
+      margin-left: 5px;
+      margin-right: 5px; }
+  .second-upper-half p {
+    position: absolute;
+    margin-top: 120px;
+    animation-name: fadeDown;
+    animation-duration: 1.5s;
+    width: 90%;
     text-align: center; }
 
-.send-module {
-  width: 100%;
-  flex-basis: 60%; }
-
-.sent-module {
-  width: 100%; }
-  .sent-module textarea {
-    background-color: #e5e5dc;
-    color: #a5a5a5; }
-
-.send-button {
-  box-shadow: 0 0 15px #000;
-  background-color: #00268f;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100px;
-  cursor: pointer; }
-  .send-button span {
-    color: white;
-    font-size: 2rem; }
-
-.send-button:active * {
-  animation-name: swipeOut;
-  animation-duration: 0.8s; }
-
-@keyframes swipeOut {
-  100% {
-    margin-left: 600px;
-    opacity: 0; } }
-
-.sent-button {
-  background-color: #00a07b;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100px;
-  cursor: pointer; }
-  .sent-button span {
-    font-size: 2rem;
-    animation-name: swipeIn;
-    animation-duration: 0.8s; }
-
-@keyframes swipeIn {
+@keyframes fadeIn {
   0% {
-    opacity: 0;
-    margin-right: 600px; }
+    opacity: 0; }
   100% {
     opacity: 1; } }
 
-textarea {
+@keyframes fadeDown {
+  0% {
+    opacity: 0; }
+  70% {
+    opacity: 0;
+    margin-top: 100px; }
+  100% {
+    opacity: 1;
+    margin-top: 120px; } }
+
+@keyframes loadTextRight {
+  0% {
+    margin-right: 550px; }
+  100% {
+    margin-right: 0; } }
+
+.second-bottom-half {
   width: 100%;
-  outline: none;
-  border: none;
-  font-size: 2rem;
-  position: absolute;
-  bottom: 92px; }
+  height: 50%;
+  flex-basis: 50%;
+  background-color: #0F2F44;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .second-bottom-half textarea {
+    color: #F2F9FE;
+    width: 90%;
+    outline: none;
+    border: none;
+    font-size: 2rem;
+    position: absolute;
+    background-color: #0F2F44;
+    animation-name: fadeIn;
+    animation-duration: 2s; }
+  .second-bottom-half .text-area.disabled {
+    color: #508AA8; }
+  .second-bottom-half .send-button {
+    width: 140px;
+    height: 60px;
+    position: fixed;
+    background-color: #508AA8;
+    bottom: 25px;
+    right: 25px;
+    border-radius: 5px;
+    border: 3px solid #508AA8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #0F2F44;
+    animation-name: buttonFadeIn;
+    animation-duration: 2s;
+    font-weight: 500;
+    text-align: center; }
+  .second-bottom-half .send-button-no-animation {
+    width: 140px;
+    height: 60px;
+    position: fixed;
+    background-color: #508AA8;
+    bottom: 25px;
+    right: 25px;
+    border-radius: 5px;
+    border: 3px solid #508AA8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #0F2F44;
+    font-weight: 500;
+    text-align: center; }
+  .second-bottom-half .disappear-button {
+    width: 140px;
+    height: 60px;
+    position: fixed;
+    background-color: #508AA8;
+    bottom: 25px;
+    right: -170px;
+    border-radius: 5px;
+    border: 3px solid #508AA8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #0F2F44;
+    animation-duration: 1s;
+    animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    font-weight: 500;
+    animation-name: buttonDisappear;
+    text-align: center; }
+
+@keyframes buttonDisappear {
+  0% {
+    right: 25px; }
+  100% {
+    right: -170px; } }
+
+.back-button {
+  width: 140px;
+  height: 60px;
+  position: fixed;
+  background-color: #508AA8;
+  bottom: 25px;
+  left: 25px;
+  border-radius: 5px;
+  border: 3px solid #508AA8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #0F2F44;
+  animation-name: buttonFadeIn;
+  animation-duration: 2s;
+  font-weight: 500;
+  text-align: center; }
+
+@keyframes buttonFadeIn {
+  0% {
+    opacity: 0; }
+  80% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0; }
+  75% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+
+.checkmark__circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-width: 2;
+  stroke-miterlimit: 10;
+  stroke: #7ac142;
+  fill: none;
+  animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards; }
+
+.checkmark {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: block;
+  stroke-width: 2;
+  stroke: #fff;
+  stroke-miterlimit: 10;
+  margin: 10% auto;
+  box-shadow: inset 0px 0px 0px #7ac142;
+  animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both; }
+
+.checkmark__check {
+  transform-origin: 50% 50%;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards; }
+
+@keyframes stroke {
+  100% {
+    stroke-dashoffset: 0; } }
+
+@keyframes scale {
+  0%, 100% {
+    transform: none; }
+  50% {
+    transform: scale3d(1.1, 1.1, 1); } }
+
+@keyframes fill {
+  100% {
+    box-shadow: inset 0px 0px 0px 30px #7ac142; } }

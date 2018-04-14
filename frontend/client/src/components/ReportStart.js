@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Frame from '../hoc/Frame';
 
 class ReportStart extends Component {
 
@@ -29,6 +28,7 @@ class ReportStart extends Component {
   componentDidMount() {
     const id = window.location.href.split("/").pop();
     if(id) {
+      this.props.history.push({pathname: '/'});        
       this.displayUndoInfo();
     }    
   }
@@ -40,7 +40,6 @@ class ReportStart extends Component {
 
   hideUndoInfo = () => {
     this.setState({displayUndoInfo: false})
-    this.props.history.push({pathname: '/'});    
   }
 
   render(){
