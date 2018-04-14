@@ -65,6 +65,7 @@
   width: 100%;
   textarea {
     background-color: #e5e5dc;
+    color: #a5a5a5
   }
 }
 
@@ -87,6 +88,20 @@
   }
 }
 
+.send-button:active * {
+  animation-name: swipeOut;
+  animation-duration: 0.8s;
+}
+
+@keyframes swipeOut {
+
+  100% {
+    margin-left: 600px;
+    opacity: 0; 
+  }
+}
+
+
 .sent-button {
   background-color: #00a07b;
   display: flex;
@@ -100,9 +115,21 @@
   cursor: pointer;
   span {
     font-size: 2rem;
+    animation-name: swipeIn;
+    animation-duration: 0.8s;
   }
 }
 
+@keyframes swipeIn {
+  0% {
+    opacity: 0;
+    margin-right: 600px;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
 
 textarea {
   width: 100%;

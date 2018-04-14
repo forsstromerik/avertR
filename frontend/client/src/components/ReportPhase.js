@@ -42,8 +42,16 @@ class ReportPhase extends Component {
     this.setState({disableInput: false});
   }
 
+  textareaChanged() {
+    let text = document.getElementById("note-entry").value;
+    if(text) {
+      this.setState({note: text});
+    }
+  }
+
   render(){
-    let { disableInput } = this.state;
+    let { note, disableInput } = this.state;
+    console.log(note);
     return(
       <Frame>
         <div className="title">
@@ -68,6 +76,7 @@ class ReportPhase extends Component {
             readOnly 
             rows="12" 
             id="note-entry"
+            onChange={this.textareaChanged}
             onClick={this.unlockTextareaHandler}></textarea> 
           <div 
             className="sent-button"
@@ -90,7 +99,7 @@ class ReportPhase extends Component {
             onClick={this.sendNoteHandler}
             >
             <span>Send</span>
-          </div>
+          </div>           
         </div>
         }
         
