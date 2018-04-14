@@ -19,7 +19,7 @@ router.get('/suggestions', function(req, res) {
                         let el1_pos = {latitude : el1.lat, longitude : el1.lon};
                         let el2_pos = {latitude : el2.lat, longitude : el2.lon};
 
-                        if(helpers.withinRadius(el1_pos, el2_pos, 0.2) && withinTimeFrame(el1.timestamp, el2.timestamp, 1200000) && withinCorrelation(el1.notes, el2.notes, 0.4) ){
+                        if(helpers.withinRadius(el1_pos, el2_pos, 1) && withinTimeFrame(el1.timestamp, el2.timestamp, 1200000) && withinCorrelation(el1.notes, el2.notes, 0.4) ){
                             group_suggestion.push(el2._id);
                         }
                     }
@@ -56,13 +56,19 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', function(req, res) {
-	let notes = req.body.notes;
 	let disturbances = req.body.disturbances;
 
-	Group.create({notes: notes, disturbances: disturbances}, function(err, group){
+	Group.create({disturbances: disturbances}, function(err, group){
 		if(err){
 			res.status(500).send({error: "Could not create group" });
 		}else{
+            disturbances.map(d_id => {
+                Disturbance.update({_id: d_id},{$set: {grouped: true }}, function(err, disturbance){
+                    if(err){
+                        res.status(500).send({error: "Could not find disturbance"});
+                    }
+                });
+            });
 			res.json(group);
 		}
 	});
