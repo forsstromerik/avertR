@@ -4,6 +4,7 @@ import ListView from './Listview';
 import MapComponent from './MapComponent';
 import RaisedButton from 'material-ui/RaisedButton';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+import io from 'socket.io-client';
 
 class Home extends Component {
   constructor(props) {
@@ -178,10 +179,26 @@ class Home extends Component {
       incidents : incidents
     })
   }
+
   componentDidMount() {
     this.fetch_incidents(); 
     this.fetch_police();
     this.fetch_groups();
+
+    const socket = io('http://localhost:3333');
+    socket.on('connect', () => {
+      console.log('socket.connect()');
+    });
+
+    socket.on('newDisturbance', data => {
+      console.log('newDisturbance()');
+      console.log(data);
+    });
+
+    socket.on('updatedDisturbance', data => {
+      console.log('updatedDisturbance()');
+      console.log(data);
+    });
   }
 
   render() {

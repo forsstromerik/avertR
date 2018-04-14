@@ -28,6 +28,16 @@ app.use(bodyParser.json({ limit: '50mb' }));
 /* Enabling CORS */
 app.use(cors());
 
+const server = require('http').Server(app);
+server.listen(3333);
+const io = require('socket.io')(server);
+
+// attack socket to reqs
+app.use(function (req, res, next) {
+  req.io = io;
+  next();
+});
+
 /* Routing */
 app.use('/', require('./routes/base'));
 app.use('/disturbances', require('./routes/disturbances'));
