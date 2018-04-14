@@ -3,3 +3,21 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.disturbance-icon {
+  width: 25px;
+  height: 25px;
+  margin-left: 10px;
+  border-radius: 50%;
+  flex-basis: 20%;
+  max-width: 25px;
+}
+
+.disturbance-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-left: 20px;
+  text-align: left;
+  flex-basis: 80%;
+}
