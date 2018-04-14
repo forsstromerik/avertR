@@ -14,7 +14,7 @@ const options = {
 };
 mongoose.connect(process.env.DB_URL, options)
     .then(() => {
-        console.log('connected to DB');
+        // do something on success?
     })
     .catch((error) => {
         console.log('could not connect to db. error: ' + error);
@@ -32,6 +32,8 @@ app.use(cors());
 app.use('/', require('./routes/base'));
 app.use('/disturbances', require('./routes/disturbances'));
 app.use('/groups', require('./routes/groups'));
+app.use('/police/events', require('./routes/police-events'));
+app.use('/history', require('./routes/history'));
 
 /* 404 */
 app.use(function(req, res, next) {
