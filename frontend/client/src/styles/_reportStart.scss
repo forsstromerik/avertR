@@ -1,17 +1,87 @@
+.start-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  .upper-half {
+    width: 100%;
+    height: 50%;
+    flex-basis: 50%;
+    background-color: #f2f9fe;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    .burger {
+      position: fixed;
+      height: 60px;
+      width: 60px;
+      top: 20px;
+      left: 20px;
+
+      div {
+        width: 40px;
+        height: 2px;
+        background-color: grey;
+        margin: 9px 0;
+      }
+    }
+    .cog-class {
+      height: 40px;
+      width: 40px;
+      color: grey;
+      position: fixed;
+      top: 20px;
+      right: 25px;
+    }
+
+    span {
+      text-align: center;
+      margin-bottom: 25px;
+      color: grey;
+      font-size: 1.5rem;
+      font-style: italic;
+      width: 80%;
+    }
+
+    p {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: auto;
+      font-weight: 500;
+      color: #323e49;
+      margin-top: auto;
+      width: 95%;
+    }
+  }
+
+  .bottom-half {
+    width: 100%;
+    height: 50%;
+    flex-basis: 50%;
+    background-color: #042235;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
 .report-start-button {
-  height: 300px;
+  height: 160px;
   width: 300px;
-  border-radius: 150px;
+  border-radius: 30px;
   box-shadow: 5px 5px 40px #111;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(255, 0, 0);
-  
-  
-
+  background-color: #DA1617;
+  margin: auto;
   span {
-    font-weight: 700;
+    font-weight: 500;
     font-size: 3rem;
   }
 }
@@ -21,12 +91,13 @@
 }
 
 .undoInfo {
-  position: fixed;
-  width: 100%;
+  padding-top: 10px;
+  position: absolute;
+  width: 60%;
   text-align: center;
-  top: 120px;
-  font-size: 3rem;
-  color: white;
+  top: 208px;
+  font-size: 1.5rem;
+  color: teal;
   animation-name: fadeOut;
   animation-duration: 3s;
 }
@@ -63,7 +134,7 @@
   margin: 0 auto;
   width: 15%;
   height: 15%;
-  background-color: #333;
+  background-color: #f2f9fe;
   border-radius: 100%;
   -webkit-animation: sk-circleBounceDelay 1.2s infinite ease-in-out both;
           animation: sk-circleBounceDelay 1.2s infinite ease-in-out both;
