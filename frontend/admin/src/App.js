@@ -6,6 +6,7 @@ import Home from './components/Home';
 import Insights from './components/Insights';
 import Drawer from 'material-ui/Drawer'; import MenuItem from 'material-ui/MenuItem';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 
@@ -22,15 +23,21 @@ class App extends Component {
     this.setState({ open: !this.state.open }); 
   }
 
-
   render() {
     const style = {
       textDecoration: 'none',
       color: 'black'
     };
 
+    const muiTheme = getMuiTheme({
+      palette: {
+        primary1Color: '#0F2F44',
+        accent1Color: '#508AA8'
+      }
+    });
+
     return (
-      <MuiThemeProvider>
+      <MuiThemeProvider muiTheme={muiTheme}>
         <BrowserRouter>
           <div>
             <AppBar

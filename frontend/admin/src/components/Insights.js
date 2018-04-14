@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import BarChart from './BarChart';
-import HeatMapImg from './heatmap.png';
+import HeatMapImg from './../images/heatmap.png';
 
 class Insights extends Component {
   constructor(props) {
