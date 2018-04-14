@@ -55,7 +55,6 @@ router.get('/', function(req, res) {
     });
 });
 
-
 router.post('/', function(req, res) {
 	let notes = req.body.notes;
 	let disturbances = req.body.disturbances;
@@ -118,25 +117,20 @@ function withinCorrelation(notes1, notes2, correlation_limit){
     });
 
     s2.map((word) =>{
-        if(keywords[word] > 0){
-            if(groups.indexOf(keywords[word]) !== -1){
+        if(keywords[word] > 0 && groups.indexOf(keywords[word]) !== -1){
                 matches++;
-            }
         }
     });
 
-
-    let correlation = matches/4; //Math.max(groups1.length, groups2.length, 1);
-
+    let correlation = matches / Math.max(groups1.length, groups2.length, 1);
     return(correlation > correlation_limit);
 }
-
-
 function withinTimeFrame(time1, time2, msec){
-    let d1 = Date.parse(time1);
-    let d2 = Date.parse(time2);
-    let diff = Math.abs(d1-d2);
-    return (diff <= msec);
+        let d1 = Date.parse(time1);
+        let d2 = Date.parse(time2);
+        let diff = Math.abs(d1-d2);
+        return (diff <= msec);
 }
+
 
 module.exports = router;
