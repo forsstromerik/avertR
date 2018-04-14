@@ -1,0 +1,21 @@
+.report-start-button {
+  height: 300px;
+  width: 300px;
+  border-radius: 150px;
+  box-shadow: 5px 5px 40px #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(255, 0, 0);
+  
+  
+
+  span {
+    font-weight: 700;
+    font-size: 3rem;
+  }
+}
+
+.report-start-button:active{
+  background-color: rgb(163, 0, 0);
+}
