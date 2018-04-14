@@ -48,6 +48,7 @@ class DisturbanceMapComponent extends React.Component {
   }
 
   calc_color = ()  => {
+
     var color = "black";
     if (this.props.police_event) {
       color = "grey";
@@ -78,7 +79,23 @@ class DisturbanceMapComponent extends React.Component {
       })
       this.calc_color();
     }
-  
+    
+    calc_height () {
+        if (this.props.id === this.props.current_active_id) {
+          return "75px"; 
+        } else {
+          return "50px";
+        }
+    }
+
+    calc_width () {
+        if (this.props.id === this.props.current_active_id) {
+          return "75px"; 
+        } else {
+          return "50px" ;
+        }
+    }
+
     render_icon (status) {
         const style={marginTop: "10px"}
         if (!status) {
@@ -106,8 +123,8 @@ class DisturbanceMapComponent extends React.Component {
       const divStyle = {
         display : this.props.display,
         borderRadius: "50%",
-        height: "50px",
-        width: "50px",
+        height: this.calc_height(),
+        width: this.calc_width(),
         backgroundColor: this.state.current_color,
         textAlign: "center",
         color: "white"

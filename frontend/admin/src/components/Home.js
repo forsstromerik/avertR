@@ -16,6 +16,7 @@ class Home extends Component {
         police_events : [],
         lat: 59.329323,
         lon : 18.068581,
+        current_active_id : "",
         show_incidents : "block",
         show_groups : "block",
         show_police : "block"
@@ -67,13 +68,15 @@ class Home extends Component {
     }
   }
 
-  coordinate_callback = (coordinates) => {
+  coordinate_callback = (coordinates, id) => {
     //lat lon
     console.log(coordinates[0]);
     console.log(coordinates[1]);
+    console.log(id);
     this.setState({
       lat: coordinates[0],
-      lon: coordinates[1]
+      lon: coordinates[1],
+      current_active_id : id
     });
   }
 
@@ -249,6 +252,7 @@ class Home extends Component {
                 police_incidents={this.state.police_events}
                 group_incidents={this.state.groups}
                 suggestion_list={this.state.suggestions}
+                current_active_id={this.state.current_active_id}
             />
           </Col>
         </Row>

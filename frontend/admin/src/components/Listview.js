@@ -29,7 +29,8 @@ class Listview extends Component {
   disturbanceClicked = (el) => {
     this.setState({ activeDisturbanceID: el._id });
     var coords = [el.lat, el.lon];
-    this.props.callback(coords);
+    var id = el._id
+    this.props.callback(coords, id);
   }
 
   renderIcon = (status, is_police) => {

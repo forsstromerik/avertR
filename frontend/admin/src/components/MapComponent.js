@@ -70,7 +70,8 @@ export default class MapComponent extends Component {
     this.setState({
       center : new_center,
       current_lat : this.props.lat_prop,
-      current_lon : this.props.lon_prop
+      current_lon : this.props.lon_prop,
+      current_active_id : this.props.current_active_id
     });
     console.log("new comp!");
   }
@@ -84,7 +85,9 @@ export default class MapComponent extends Component {
         display={this.props.show_incidents}
         group_id={this.props.groupId}
         groups_displayed={this.props.show_groups}
-        key={incident._id} 
+        current_active_id={this.state.current_active_id}
+        key={incident._id}
+        id={incident._id}
         incident_name={incident.name} 
         incident_notes={incident.notes} 
         lat={incident.lat} 
@@ -101,8 +104,10 @@ export default class MapComponent extends Component {
         police_incidents = this.props.police_incidents.map((incident) => 
           <DisturbanceMapComponent 
             display={this.props.show_police}
-            key={incident.id} 
+            key={incident._id} 
+            id={incident._id}
             incident_name={incident.name} 
+            current_active_id={this.state.current_active_id}
             incident_notes={incident.notes} 
             lat={incident.lat} 
             lng={incident.lon}
@@ -118,7 +123,9 @@ export default class MapComponent extends Component {
           <DisturbanceMapComponent 
             display={this.props.show_groups}
             key={group.id} 
+            id={group.id}
             incident_name={group.name} 
+            current_active_id={this.state.current_active_id}
             incident_notes={group.summary} 
             lat={group.disturbances[0].lat} 
             lng={group.disturbances[0].lon}
