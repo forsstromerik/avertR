@@ -70,9 +70,6 @@ class Home extends Component {
 
   coordinate_callback = (coordinates, id) => {
     //lat lon
-    console.log(coordinates[0]);
-    console.log(coordinates[1]);
-    console.log(id);
     this.setState({
       lat: coordinates[0],
       lon: coordinates[1],
@@ -194,8 +191,9 @@ class Home extends Component {
     });
 
     socket.on('newDisturbance', data => {
-      console.log('newDisturbance()');
-      console.log(data);
+      this.setState({
+          incidents : data.disturbances
+      })
     });
 
     socket.on('updatedDisturbance', data => {

@@ -73,7 +73,6 @@ export default class MapComponent extends Component {
       current_lon : this.props.lon_prop,
       current_active_id : this.props.current_active_id
     });
-    console.log("new comp!");
   }
   render() {
     const incidents = this.props.incident_list;
