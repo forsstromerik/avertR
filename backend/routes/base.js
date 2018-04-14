@@ -4,7 +4,7 @@ var Disturbance = require('../models/disturbance');
 
 router.get('/', function(req, res) {
     res.json({
-        name: 'disturbance-reporter-api',
+        name: 'avertR-api',
         status: 'running'
     });
 });

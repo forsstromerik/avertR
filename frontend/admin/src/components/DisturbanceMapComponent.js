@@ -43,12 +43,7 @@ class DisturbanceMapComponent extends React.Component {
     }) 
   }
 
-  dispatch_guard = () => {
-    alert("Guard dispatched.")
-  }
-
   calc_color = ()  => {
-
     var color = "black";
     if (this.props.police_event) {
       color = "grey";
@@ -62,7 +57,7 @@ class DisturbanceMapComponent extends React.Component {
         if (status === "ACTIVE") {
           color = "#f44149";
         } else if (status === "PENDING") {
-          color = "#e8f441";
+          color = "#AA8A5F";
         } else if (status === "FAULTY"){
             color = "orange";
         } else {
@@ -81,23 +76,15 @@ class DisturbanceMapComponent extends React.Component {
     }
     
     calc_height () {
-        if (this.props.id === this.props.current_active_id) {
-          return "75px"; 
-        } else {
-          return "50px";
-        }
+        return "50px";
     }
 
     calc_width () {
-        if (this.props.id === this.props.current_active_id) {
-          return "75px"; 
-        } else {
-          return "50px" ;
-        }
+        return "50px" ;
     }
 
     render_icon (status) {
-        const style={marginTop: "10px"}
+        const style = {};
         if (!status) {
           return (<Gavel style={style}/>);
         } else if (status === 'PENDING') {
@@ -120,20 +107,34 @@ class DisturbanceMapComponent extends React.Component {
               </p>
           );
       }
-      const divStyle = {
+
+
+      let zIndex;
+      if (this.props.current_active_id === this.props.id) {
+        zIndex = 2;
+      } else {
+        zIndex = 1;
+      }
+
+      let divStyle = {
         display : this.props.display,
         borderRadius: "50%",
         height: this.calc_height(),
         width: this.calc_width(),
         backgroundColor: this.state.current_color,
         textAlign: "center",
-        color: "white"
+        color: "white",
+        cursor: "pointer",
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex
+      }
+
+      if (divStyle.display === 'block') {
+        divStyle.display = 'flex'; 
       }
 
       const modalStyle = {
-        width: "300px",
-        height: "500px",
-        marginLeft: "50%" 
       }
 
       const titleStyle = {
@@ -156,12 +157,15 @@ class DisturbanceMapComponent extends React.Component {
                 </CardText>
                 <CardText
                   style={titleStyle}>
-                  Suggested groups: 
-                  {map_suggestions}
+                  {map_suggestions && (
+                    <div>
+                      <span>Suggested groups: </span>
+                      {map_suggestions}
+                    </div>
+                  )}
                 </CardText>
             </Card>
            <RaisedButton primary={true} onClick={this.open_modal} label="Close"/> 
-           <RaisedButton secondary={true} onClick={this.dispatch_guard} label="Delete"/> 
         </div>
       ]
 
@@ -175,12 +179,13 @@ class DisturbanceMapComponent extends React.Component {
             style={divStyle}
             zDepth={2}
             circular={true}
+            className="marker" 
             children={paper_children}
           />
           <Dialog
             style={modalStyle}
             contentStyle={modalStyle}
-            title="Viewing detailed info"
+            title="Details"
             open={this.state.show_modal}
             actions={actions}
           >

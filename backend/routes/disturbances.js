@@ -7,7 +7,6 @@ router.get('/', function(req, res) {
 	if (err) {
 	    res.status(500).send({error: "Could not load disturbances"});
 	} else {
-	    console.log(req.io);
 	    res.json(disturbances);
 	}
     });
@@ -22,8 +21,14 @@ router.post('/', function(req, res) {
 	if(err){
 	    res.status(500).send({error: "Could not create disturbance" });
 	}else{
-	    req.io.emit('newDisturbance', { disturbance } );
-	    res.json(disturbance);
+	    Disturbance.find({}).sort({timestamp: -1}).exec(function(err, disturbances) {
+		if (err) {
+		    res.status(500).send({error: "Could not load disturbances"});
+		} else {
+		    req.io.emit('newDisturbance', { disturbances, newDisturbanceID: disturbance._id } );
+		    res.json(disturbance);
+		}
+	    });
 	}
     });
 });
@@ -47,8 +52,14 @@ router.put('/:id', function(req, res) {
 	if(err){
 	    res.status(500).send({error: "Could not update disturbance" });
 	}else{
-	    req.io.emit('updatedDisturbance', { disturbance } );
-	    res.json(disturbance);
+	    Disturbance.find({}).sort({timestamp: -1}).exec(function(err, disturbances) {
+		if (err) {
+		    res.status(500).send({error: "Could not load disturbances"});
+		} else {
+		    req.io.emit('updatedDisturbance', { disturbances } );
+		    res.json(disturbance);
+		}
+	    });
 	}
     });
 });

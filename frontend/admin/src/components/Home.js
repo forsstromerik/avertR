@@ -5,6 +5,7 @@ import MapComponent from './MapComponent';
 import RaisedButton from 'material-ui/RaisedButton';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import io from 'socket.io-client';
+import H4SLogo from '../images/h4s.png';
 
 class Home extends Component {
   constructor(props) {
@@ -19,7 +20,8 @@ class Home extends Component {
         current_active_id : "",
         show_incidents : "block",
         show_groups : "block",
-        show_police : "block"
+        show_police : "block",
+        newIDs: []
       }
   }
   
@@ -69,6 +71,7 @@ class Home extends Component {
   }
 
   coordinate_callback = (coordinates, id) => {
+    console.log(coordinates, id);
     //lat lon
     this.setState({
       lat: coordinates[0],
@@ -191,23 +194,27 @@ class Home extends Component {
     });
 
     socket.on('newDisturbance', data => {
+      let arr = this.state.newIDs;
+      arr.push(data.newDisturbanceID);
       this.setState({
-          incidents : data.disturbances
+        incidents : data.disturbances,
+        newIDs: arr
       })
     });
 
     socket.on('updatedDisturbance', data => {
-      console.log('updatedDisturbance()');
       console.log(data);
+      this.setState({
+          incidents : data.disturbances
+      })
     });
   }
 
   render() {
     return (
-      <Grid fluid style={{ maxHeight: '700px' }}>
-        <Row>
-          <Col xs={3} style={{ maxHeight: '700px', overflow: 'scroll' }}>
-          <Row style={{marginTop: "5px"}}>
+      <Grid fluid style={{ maxHeight: '700px', padding: 0}}> <Row>
+          <Col className="sidebar" xs={3} style={{ maxHeight: '700px', overflow: 'scroll', paddingRight: 0 }}>
+          <Row style={{paddingTop: "10px", paddingLeft: '10px'}}>
             <Col md={4}>
                 <RaisedButton 
                   label="Incidents" 
@@ -237,9 +244,16 @@ class Home extends Component {
               callback={this.coordinate_callback}
               police_incidents={this.state.police_events}
               group_incidents={this.state.groups}
+              newIDs={this.state.newIDs}
+              removeNewID={(id) => {
+                let array = this.state.newIDs;
+                let index = array.indexOf(id);
+                array.splice(index, 1);
+                this.setState({ newIDs: array });
+              }}
               incident_list={this.state.incidents} />
           </Col>
-          <Col xs={9}>
+          <Col xs={9} style={{ overflowX: 'hidden', paddingLeft: 0 }}>
             <MapComponent 
                 show_incidents={this.state.show_incidents}
                 show_groups={this.state.show_groups}
@@ -254,6 +268,11 @@ class Home extends Component {
             />
           </Col>
         </Row>
+
+        <div className="footer">
+          <img style={{ margin: '0 auto', width: '75px' }} src={H4SLogo} />           
+          <p>Created with &hearts; by team Praise Networks @ Hack 4 Sweden 2018</p>
+        </div>
       </Grid>
     );
   }

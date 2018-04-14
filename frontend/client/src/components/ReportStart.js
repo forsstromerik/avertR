@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-const BASE_URL = 'https://h4s3.inneva.se';
+const BASE_URL = 'http://localhost:3000';
 
 class ReportStart extends Component {
 
@@ -55,7 +55,7 @@ class ReportStart extends Component {
               <div></div>
             </div>
             <i className="fas fa-cog cog-class"></i>
-            <p>Disturbance Reporter</p>
+            <p>avertR</p>
             <span>Are you in an emergency? Call 112.</span>
           </div>
           <div className="bottom-half">

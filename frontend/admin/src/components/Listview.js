@@ -21,8 +21,7 @@ class Listview extends Component {
       activeDisturbanceID: 0,
       display_incidents : this.props.display_incidents,
       display_police: this.props.display_police,
-      display_groups: this.props.display_groups,
-      biggest_list: []
+      display_groups: this.props.display_groups
     };
   }
 
@@ -30,26 +29,58 @@ class Listview extends Component {
     this.setState({ activeDisturbanceID: el._id });
     var coords = [el.lat, el.lon];
     var id = el._id
+    this.props.newIDs.map(id => {
+      if (id === el._id) {
+        this.props.removeNewID(el._id);
+      } 
+    });
+
     this.props.callback(coords, id);
   }
 
   renderIcon = (status, is_police) => {
+    let style = { fill: 'black' };
     if (is_police == 'POLICE') {
-      return (<Gavel />);
+      return (<Gavel style={style} />);
     } else
     if (status === 'PENDING') {
-      return (<PendingIcon />); 
+      return (<PendingIcon style={style} />); 
     } else if (status === 'ACTIVE') {
-      return (<ActiveIcon />); 
+      return (<ActiveIcon style={style} />); 
     } else if (status === 'RESOLVED') {
-      return (<ResolvedIcon />); 
+      return (<ResolvedIcon style={style} />); 
     } else {
-      return (<ClosedIcon />); 
+      return (<ClosedIcon style={style} />); 
     }
   }
 
-  buildList() {
-      const incidents = this.props.incident_list;
+  isVisible = (type) => {
+    if (type === 'INCIDENT') {
+      return this.props.display_incidents;
+    } else if (type === 'GROUP') {
+      return this.props.display_groups;
+    } else {
+      return this.props.display_police;
+    }
+  }
+
+  calc_color = (info) => {
+    if (info._id === this.state.activeDisturbanceID) {
+      return "#1FDBCD3";
+    } else if (info.type === "POLICE") {
+      return "grey";
+    } else if (info.status === "ACTIVE"){
+      return "red"
+    } else if (info.status === "PENDING"){
+      return "#AA8A5F";
+    } else {
+      return "#FDA429";
+    }
+    //backgroundColor: this.state.activeDisturbanceID === el._id ? '#1FBCD3' : 'rgb(117, 117, 117)'
+  }
+
+  render() {
+    const incidents = this.props.incident_list;
     for (var i = 0; i < incidents.length; i++) {
       incidents[i].type = 'INCIDENT';
     }
@@ -74,53 +105,39 @@ class Listview extends Component {
         }
     }
 
-    this.setState({ biggest_list });
-  }
-
-  isVisible = (type) => {
-    if (type === 'INCIDENT') {
-      return this.props.display_incidents;
-    } else if (type === 'GROUP') {
-      return this.props.display_groups;
-    } else {
-      return this.props.display_police;
-    }
-  }
-
-  calc_color = (info) => {
-    if (info._id === this.state.activeDisturbanceID) {
-      return "#1FDBCD3";
-    } else if (info.type === "POLICE") {
-      return "grey";
-    } else if (info.status === "ACTIVE"){
-      return "red"
-    } else if (info.status === "PENDING"){
-      return "yellow";
-    } else {
-      return "grey";
-    }
-    //backgroundColor: this.state.activeDisturbanceID === el._id ? '#1FBCD3' : 'rgb(117, 117, 117)'
-  }
-
-  render() {
-      if (this.props.police_incidents.length > 0 && this.props.group_incidents.length > 0 && this.props.incident_list.length > 0 && this.state.biggest_list.length == 0) {
-        this.buildList();
-      }
     //Filters
     return (
       <div>
       <List>
         <Subheader>Disturbances</Subheader>
-        {this.state.biggest_list.map(el => {
+        {biggest_list.map(el => {
           if (!el.notes) {
             el.notes = 'No notes available'; 
           }
           const avatarStyle = {
-            backgroundColor: this.calc_color(el)
+            backgroundColor: this.calc_color(el),
+            color: 'black'
           };
           const styles = {
-              display: this.isVisible(el.type)
+            display: this.isVisible(el.type)
           };
+
+          let classes = 'listitem';
+
+          let found = false;
+          this.props.newIDs.map(id => {
+            if (el._id === id) {
+              found = true;
+              classes += ' new';
+            }
+          });
+
+          if (!found) {
+            if (el._id === this.state.activeDisturbanceID) {
+              classes += ' active';
+            }
+          }
+
           return (
             <ListItem
               key={el._id }
@@ -128,13 +145,11 @@ class Listview extends Component {
               primaryText={moment(el.timestamp).format('MMMM Do, h:mm')}
               secondaryText={el.notes}
               style={styles}
+              className={classes}
               onClick={() => { this.disturbanceClicked(el); }} />
           );
         })}
       </List>
-
-
-
       </div>
     );
   }

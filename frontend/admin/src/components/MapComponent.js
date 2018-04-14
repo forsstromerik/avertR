@@ -24,7 +24,6 @@ export default class MapComponent extends Component {
       current_lon : 18.068581
     });
   } 
-
   static defaultProps = { 
     center: {
       lat: 59.329323,
@@ -93,6 +92,7 @@ export default class MapComponent extends Component {
         lng={incident.lon}
         incident_time={incident.timestamp}
         incident_status={incident.status}
+        $hover={false}
         incident_belonging_suggestions={incident.belonging_suggestions} 
         incident_show_suggestion_color={this.state.show_suggestion_color}
       />
@@ -110,6 +110,7 @@ export default class MapComponent extends Component {
             incident_notes={incident.notes} 
             lat={incident.lat} 
             lng={incident.lon}
+            $hover={false}
             incident_time={incident.timestamp}
             police_event={true}
           />
@@ -129,6 +130,7 @@ export default class MapComponent extends Component {
             lat={group.disturbances[0].lat} 
             lng={group.disturbances[0].lon}
             incident_time={group.timestamp}
+            $hover={false}
             group_event={true}
           />
         );
@@ -138,6 +140,7 @@ export default class MapComponent extends Component {
       const map_suggestions = suggestions.map((suggestion, index) =>
         <div key={index}>
           <Suggestion
+            $hover={false}
             suggested_group={suggestion}
           />
           <Divider />
@@ -145,28 +148,28 @@ export default class MapComponent extends Component {
       );
 
       const dialog_actions = [
-        <RaisedButton key={1} label="Close" primary={true} onClick={this.display_suggestions} />
+        <RaisedButton $hover={false} key={1} label="Close" primary={true} onClick={this.display_suggestions} />
       ]
       return (
         // Important! Always set the container height explicitly
-        <div style={{ height: '700px', width: '100%' }}>
+        <div style={{ height: '100%', width: '100%', position: 'relative' }}>
           <GoogleMapReact
-            onGoogleApiLoaded={({ map, maps }) => { this.setState({ map: map, maps:maps, mapLoaded: true }) }}
             bootstrapURLKeys={{ "key": "AIzaSyAys6BYpEjD1_HFe8b9O7E-i5yVM6nyQsU" }}
             defaultCenter={this.props.center}
             defaultZoom={this.props.zoom}
             center={this.state.center}
           >
             <div
-              style={{width: "100px", height:"100px", backgroundColor: "orange"}}
+              className="currentIndicator"
               lat={this.state.current_lat}
               lng={this.state.current_lon}
+              $hover={false}
             >
             </div>
-            {map_incidents}
             <Dialog
               open={this.state.show_suggestions}
               title="Suggested Groups"
+              $hover={false}
               actions={dialog_actions}
             >
               {map_suggestions}
@@ -176,13 +179,14 @@ export default class MapComponent extends Component {
             {group_incidents}
           </GoogleMapReact>
 
-
             <RaisedButton secondary={true} 
               label="List suggestions"
               onClick={this.display_suggestions}
               style={{
                 position : "absolute",
-                marginTop: "-700px"
+                top: '10px',
+                left: '10px',
+                zIndex: 2
               }}
             />
 

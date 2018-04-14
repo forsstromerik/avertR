@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import axios from 'axios';
 
-const BASE_URL = 'https://h4s3.inneva.se';
+const BASE_URL = 'http://localhost:3000';
 
 class ReportPhase extends Component {
 

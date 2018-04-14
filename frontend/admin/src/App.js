@@ -41,7 +41,7 @@ class App extends Component {
         <BrowserRouter>
           <div>
             <AppBar
-              title="DisturbanceReporter"
+              title="avertR"
               onLeftIconButtonClick={this.toggleDrawer}
             />
             <Drawer
