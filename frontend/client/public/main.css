@@ -1,0 +1,97 @@
+#root {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; }
+
+.frame {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(#3498db, #2c3e50); }
+
+.report-start-button {
+  height: 300px;
+  width: 300px;
+  border-radius: 150px;
+  box-shadow: 5px 5px 40px #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: red; }
+  .report-start-button span {
+    font-weight: 700;
+    font-size: 3rem; }
+
+.report-start-button:active {
+  background-color: #a30000; }
+
+.title {
+  position: absolute;
+  top: 25px;
+  font-size: 2rem;
+  width: 100%;
+  height: 100px; }
+  .title span {
+    font-weight: 700;
+    padding-left: 25px;
+    color: white; }
+  .title p {
+    padding-left: 25px;
+    font-size: 0.9rem;
+    color: black; }
+
+.submit-title {
+  position: absolute;
+  top: 120px;
+  font-size: 2rem;
+  width: 100%;
+  height: 100px; }
+  .submit-title span {
+    font-weight: 700;
+    padding-left: 25px;
+    color: white; }
+
+.send-module {
+  width: 100%; }
+
+.send-button {
+  box-shadow: 0 0 15px #000;
+  background-color: #00268f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+  cursor: pointer; }
+  .send-button span {
+    color: white;
+    font-size: 2rem; }
+
+.sent-button {
+  background-color: #00a07b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+  cursor: pointer; }
+  .sent-button span {
+    font-size: 2rem; }
+
+textarea {
+  width: 100%;
+  outline: none;
+  border: none;
+  font-size: 2rem;
+  position: absolute;
+  bottom: 92px; }
