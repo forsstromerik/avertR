@@ -1,12 +1,12 @@
 # avertR
-Avert potential incidents involving humans before they happen by notifying authorities in an smooth way
+Avert potentially harmful incidents before they happen by notifying security providers in a smooth way
 
 ## What is avertR?
-avertR is an app that makes it easy for citizens to notify the responsible authority in the event of a threatful situation. With a few simple clicks your location is sent to the authority with additional information given by you about what's happening.
+avertR is an app that makes it easy for citizens to notify security providers in the event of a threatening situation. With just one click, your location is sent to the relevant security provider - you may also provide additional information about the incident
 
-The responsible authority gets a live overview of reported incidents in the area and can easily distribute personnel accordingly. Together with recent activity data from the police the authority can optimize the allocation of resources and help citizens more efficiently. A natural consequence of this is that the authority can also save a lot of money.
+The responsible security provider gets a live overview of reported incidents in the area and can easily distribute personnel accordingly. Together with recent activity data from the police the provider can optimize the allocation of resources and help citizens more efficiently, with the added benefit of cutting costs.
 
-The data collected provides good insight to when and where these situations occur, which is of good value for predictions for the future.
+The data collected provides an insight into when and where these situations occur, which can be used for future predictions.
 
 ## Try it out
 avertR uses [yarn](https://yarnpkg.com) to manage dependencies and run the servers, so make sure it is installed and then follow the instructions below.
