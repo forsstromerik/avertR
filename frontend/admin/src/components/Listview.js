@@ -142,7 +142,7 @@ class Listview extends Component {
             <ListItem
               key={el._id }
               leftAvatar={<Avatar style={avatarStyle} icon={this.renderIcon(el.status, el.type)} />}
-              primaryText={moment(el.timestamp).format('MMMM Do, h:mm')}
+              primaryText={moment(el.timestamp).format('MMMM Do, h:mm a')}
               secondaryText={el.notes}
               style={styles}
               className={classes}
