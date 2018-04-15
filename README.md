@@ -2,6 +2,8 @@
 Avert potentially harmful incidents before they happen by notifying security providers in a smooth way
 
 ## Demo video
+Click the GIF below to check out the demo video!
+
 [![alt text](https://media.giphy.com/media/RMyRaTQYy6Jnu48cJd/giphy.gif)](https://youtu.be/22iTt0Nb-rA)
 
 ## What is avertR?
