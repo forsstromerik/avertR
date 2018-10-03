@@ -1,5 +1,5 @@
 # avertR
-Avert potentially harmful incidents before they happen by notifying security providers in a smooth way
+Avert potentially harmful incidents before they happen by notifying security providers in a smooth way. Developed during a weekend in April 2018 when participating in the hackathon [Hack for Sweden](https://hackforsweden.se/).
 
 ## Demo video
 Click the GIF below to check out the demo video!
@@ -42,3 +42,9 @@ The app can be found at [localhost:3002](http://localhost:3002).
 
 ## License
 See the `LICENSE` file in the repository root.
+
+## Team MPCSN
+* [Jesper Carlsson](https://github.com/cjesper)
+* [Erik Forsström](https://erikforsstrom.se/)
+* [Axel Niklasson](https://axelniklasson.se/)
+* [Therese Petersson](https://github.com/TheresePetersson)
